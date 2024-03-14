@@ -1,4 +1,4 @@
-from gpt import chat_with_gpt
+from testing.gpt import chat_with_gpt
 import os
 import firebase_admin
 from firebase_admin import credentials

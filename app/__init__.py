@@ -18,3 +18,4 @@ CORS(app)
 
 from app import account_routes
 from app import image_routes
+from app import prompt_routes
