@@ -12,4 +12,4 @@ from firebase_admin import auth
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    
+    return "abc"
