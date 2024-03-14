@@ -89,16 +89,17 @@
             isDrawingMode: true
         });
 
+        var isDrawingMode = true;
+        const defaultBrush = canvas.freeDrawingBrush;
         var color = document.getElementById("colorPicker").value;
+        canvas.freeDrawingBrush.width = 5;
+        canvas.freeDrawingBrush.color = color;
+
         colorPicker.addEventListener('change', function () {
             canvas.freeDrawingBrush.color = this.value;
         });
 
         var rect = new fabric.Rect();
-        var isDrawingMode = true;
-        const defaultBrush = canvas.freeDrawingBrush;
-        canvas.freeDrawingBrush.width = 5;
-        canvas.freeDrawingBrush.color = color;
 
         document.getElementById("edit").addEventListener('click', function () {
             canvas.isDrawingMode = false;
@@ -132,12 +133,11 @@
         })
 
         document.getElementById("check").addEventListener('click', function () {
-
             canvas.add(rect);
             document.getElementById("colorPicker2").style.display = "none";
             document.getElementById("check").style.display = "none";
-
         })
+
 
         document.getElementById("circle").addEventListener('click', function () {
             canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
