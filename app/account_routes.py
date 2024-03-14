@@ -26,7 +26,7 @@ def sign_up() -> UserRecord:
         # Catch any other unexpected errors
         return jsonify({"msg": str(e)}), 500
 
-    return auth.get_user_by_email(email).uid, 200
+    return jsonify({"message": auth.get_user_by_email(email).uid}), 200
 
 @app.route('/login', methods=['POST'])
 def log_in() -> UserRecord:
@@ -42,4 +42,5 @@ def log_in() -> UserRecord:
     if response.status_code >= 300:
         return response.text, response.status_code
     else:
-        return auth.get_user_by_email(email).uid, response.status_code
+        print('upload image')
+        return jsonify({"message": auth.get_user_by_email(email).uid}), response.status_code
