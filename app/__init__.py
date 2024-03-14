@@ -14,7 +14,5 @@ auth_url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPasswor
 
 app = Flask(__name__)
 
-db = firestore.client()
-
 from app import account_routes
 from app import image_routes
