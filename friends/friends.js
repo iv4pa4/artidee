@@ -2,8 +2,8 @@ const friends = getFriends();
 
 const addButton = document.getElementById('add');
 
-add.addEventListener('click', () => {//TODO
-	    window.location.href = '/';
+add.addEventListener('click', () => {
+    window.location.href = '../add%20friend/add.html';
 })
 
 function loadFriends() {
@@ -11,20 +11,24 @@ function loadFriends() {
     const friendsContainer = document.getElementById('friends'); 
 
     friendsList.forEach((friend) => { 
+        const { id, name } = friend; // Correctly destructuring the object here
+
         const box = document.createElement('div');
         box.className = 'box';
 
         const descElement = document.createElement('p');
-        descElement.textContent = friend.name;
+        descElement.textContent = name;
         descElement.className = 'image-description';
-        
-        friend.onclick = function() {//TODO
-	    window.location.href = '/';
+    
+        descElement.onclick = function() {
+            localStorage.setItem('friendName', name);
+            window.location.href = '../gallery/gallery.html';
         }
 
         box.appendChild(descElement);
         friendsContainer.appendChild(box);
     });
+
 }
 
 
