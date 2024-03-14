@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
         }
+
         #drawingCanvas {
             position: absolute;
             top: 0;
@@ -21,51 +24,94 @@
             height: 100%;
             border: 2px solid black;
         }
-
     </style>
 </head>
+
 <body>
-        
-    <canvas id="drawingCanvas" width="1000" height="600"></canvas>
+
+    <canvas id="drawingCanvas" width="1000" height="500"></canvas>
     <button id="edit" width="100px">edit</button>
     <button id="brush" width="100px">brush</button>
+    <button id="clear" width="100px">clear</button>
 
-    <input id="colorPicker" data-jscolor="{ value: '#33AACC80', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"> 
+
+    <button id="rec" width="100px">rectangle</button>
+    <input id="colorPicker2"
+        data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"
+        style="display: none;">
+    <button id="check" style="display: none;">check</button>
+
+    <input id="colorPicker"
+        data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }">
 
 
     <script>
-        var canvas = new fabric.Canvas('drawingCanvas',{
-            isDrawingMode: true 
+        var canvas = new fabric.Canvas('drawingCanvas', {
+            isDrawingMode: true
         });
 
         var color = document.getElementById("colorPicker").value;
-        colorPicker.addEventListener('change', function() {
-        canvas.freeDrawingBrush.color = this.value;
+        colorPicker.addEventListener('change', function () {
+            canvas.freeDrawingBrush.color = this.value;
         });
 
-        var rect = new fabric.Rect({
-            left: 100,
-            top: 100,
-            width: 100,
-            height: 100,
-            fill: 'red',
-            selectable: true
-            
-        });
+        // function addRectangleFromColorPicker() {
+        //     var rect = new fabric.Rect({
+        //         left: 100,
+        //         top: 100,
+        //         width: 100,
+        //         height: 100,
+        //         fill: colorPicker2.value, 
+        //         selectable: true
+        //     });
+        //     canvas.add(rect);
+        // }
 
-        canvas.add(rect);
+        var rect = new fabric.Rect();
         var isDrawingMode = true;
 
         canvas.freeDrawingBrush.width = 5;
         canvas.freeDrawingBrush.color = color;
 
-        document.getElementById("edit").addEventListener('click', function() {
-            canvas.isDrawingMode=false;
+        document.getElementById("edit").addEventListener('click', function () {
+            canvas.isDrawingMode = false;
         })
 
-        document.getElementById("brush").addEventListener('click', function() {
-            canvas.isDrawingMode=true;
+        document.getElementById("brush").addEventListener('click', function () {
+            canvas.isDrawingMode = true;
+        })
+
+        document.getElementById("clear").addEventListener('click', function () {
+            canvas.clear()
+        })
+
+        document.getElementById("rec").addEventListener('click', function () {
+            document.getElementById("colorPicker2").style.display = "block";
+            document.getElementById("check").style.display = "block";
+
+            var col = document.getElementById("colorPicker2").value;
+            colorPicker2.addEventListener('change', function () {
+                col = this.value;
+                rect = new fabric.Rect({
+                    left: 100,
+                    top: 100,
+                    width: 100,
+                    height: 100,
+                    fill: col,
+                    selectable: true
+                });
+            });
+
+        })
+
+        document.getElementById("check").addEventListener('click', function () {
+
+            canvas.add(rect);
+            document.getElementById("colorPicker2").style.display = "none";
+            document.getElementById("check").style.display = "none";
+
         })
     </script>
 </body>
+
 </html>
