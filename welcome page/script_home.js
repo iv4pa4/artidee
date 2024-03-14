@@ -34,7 +34,7 @@ doSignUpButton.addEventListener('click', () => {
 	.then(data => {
   		console.log('Success:', data);
   		console.log('Message:', data.message);
-  		//TODO save message as user id :)
+		localStorage.setItem('userID', data.message);
 	})
 	.catch((error) => {
   		console.error('Error:', error);
@@ -60,7 +60,7 @@ doLoginButton.addEventListener('click', () => {
 	.then(data => {
   		console.log('Success:', data);
   		console.log('Message:', data.message);
-  		//TODO save message as user id :)
+		localStorage.setItem('userID', data.message);
 	})
 	.catch((error) => {
   		console.error('Error:', error);
