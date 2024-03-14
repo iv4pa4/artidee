@@ -8,6 +8,7 @@ from flask import Flask
 cred = credentials.Certificate(os.path.join(os.getcwd(), "app\\kocosi-firebase-key.json"))
 
 base = firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 auth_url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword"
 

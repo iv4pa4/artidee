@@ -26,7 +26,7 @@ def sign_up() -> UserRecord:
         # Catch any other unexpected errors
         return jsonify({"msg": str(e)}), 500
 
-    return jsonify({"message": "User created successfully"}), 200
+    return auth.get_user_by_email(email).uid, 200
 
 @app.route('/login', methods=['POST'])
 def log_in() -> UserRecord:
@@ -39,4 +39,7 @@ def log_in() -> UserRecord:
                     params={"key": key.read()},
                     data=request.json)
 
-    return response.text, response.status_code
+    if response.status_code >= 300:
+        return response.text, response.status_code
+    else:
+        return auth.get_user_by_email(email).uid, response.status_code
