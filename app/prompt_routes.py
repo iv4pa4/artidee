@@ -1,15 +1,21 @@
+import json
+import requests
+import os
+
+from app import app
+from app import base
+from app import db
+from app import auth_url
+
+from flask import request, jsonify
+
+from firebase_admin import auth
+
 from flask import Flask, request, jsonify
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import os
 from testing.generate_prompt import prompt
-
-cred = credentials.Certificate(os.path.join(os.getcwd(), "app\\kocosi-firebase-key.json"))
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-
-app = Flask(__name__)
 
 @app.route('/prompt', methods=['POST'])
 def generate_prompt():
