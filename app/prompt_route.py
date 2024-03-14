@@ -1,21 +1,22 @@
-import json
-import requests
-import os
+# import json
+# import requests
+# import os
 
 from app import app
-from app import base
-from app import db
-from app import auth_url
+# from app import base
+# from app import db
+# from app import auth_url
 
 from flask import request, jsonify
 
-from firebase_admin import auth
+# from firebase_admin import auth
 
 from flask import Flask, request, jsonify
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+# import firebase_admin
+# from firebase_admin import credentials
+# from firebase_admin import firestore
 from app.drawing_prompt import drawing_prompt
+from app.openai_api_functions import image_generator
 
 @app.route('/prompt', methods=['POST'])
 def generate_prompt():
@@ -29,6 +30,10 @@ def generate_prompt():
         return jsonify({'error': 'Missing parameters'}), 400
     
     generated_prompt = drawing_prompt(mood, abstraction, additional, user_id)
+
+    if abstraction == 0:
+        generated_image = image_generator(generated_prompt)
+        return jsonify({'prompt': generated_prompt, 'image_url': generated_image})
     
     return jsonify({'prompt': generated_prompt})
 
