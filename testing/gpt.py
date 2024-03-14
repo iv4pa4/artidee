@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-with open('testing/key.txt', 'r') as file:
+with open('key.txt', 'r') as file:
     my_key = file.read()
 
 client = OpenAI(
@@ -19,14 +19,14 @@ def chat_with_gpt(prompt):
     )
     return response.choices[0].message.content
 
-if __name__ == "__main__":
-    while True:
-        user_input = input("type:")
-        if user_input == "quit":
-            break
+# if __name__ == "__main__":
+#     while True:
+#         user_input = input("type:")
+#         if user_input == "quit":
+#             break
 
-        try:
-            response = chat_with_gpt(user_input)
-            print("reply:", response)
-        except Exception as e:
-            print("An error occurred:", e)
+#         try:
+#             response = chat_with_gpt(user_input)
+#             print("reply:", response)
+#         except Exception as e:
+#             print("An error occurred:", e)
