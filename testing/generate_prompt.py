@@ -34,17 +34,20 @@ abstractions = ("specific",
 print("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, " + abstractions[abstraction] + additional + ". Be very brief - a few words or a sentence at most.")
 
 def prompt(mood, abstraction, additional, user_id):
-    response = chat_with_gpt("Please tell me what to draw. My mood today: " + moods[mood] + ". How specific is the drawing theme: , " + abstractions[abstraction] + ". Make it just a short sentence!")
+    response = chat_with_gpt("Please tell me what to draw. My mood today: " + moods[mood] + ". How specific is the drawing theme: , " + abstractions[abstraction] + additional + ". Make it just a short sentence!")
             
     blacklist_ref = db.collection("Blacklist").document(user_id)
     blacklist_data = blacklist_ref.get()
-    if blacklist_data.exists and len(blacklist_data.to_dict().get("topics", [])) > 0:
+
+    if blacklist_data.exists:
         blacklist = blacklist_data.to_dict().get("topics", [])
-        if len(blacklist) > 0 and response in blacklist:
+        if response in blacklist:
             return prompt(mood, abstraction, additional, user_id)
     
-    blacklist_ref.update({"topics": firestore.ArrayUnion([response]), "user_id": user_id})
-    # blacklist_ref.set({"user_id": })
+    blacklist_ref.update({"topics": firestore.ArrayUnion([response])})
+
+    if "user_id" not in blacklist_data.to_dict():
+        blacklist_ref.update({"user_id": user_id})
 
     return response
 
