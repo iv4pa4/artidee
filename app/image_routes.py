@@ -17,13 +17,5 @@ def upload():
     uid = json_data['uid']
     filename = json_data['filename']
 
-    key = open(os.path.join(os.getcwd(), "app\\web_api_key.txt"), 'r')
-    response = requests.post(auth_url,
-                    params={"key": key.read()},
-                    data=request.json)
-
-    if response.status_code >= 300:
-        return response.text, response.status_code
-    else:
-        print('upload image')
-        return auth.get_user_by_email(email).uid, response.status_code
+    update_time, doc_id = db.collection("Images").add({"filename": filename, "user_id": uid})
+    return jsonify({"message": doc_id.id}), 200
