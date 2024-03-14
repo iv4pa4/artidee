@@ -4,84 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas with Selectable Items and Drawing</title>
+    <title>Daily Prompt</title>
+    <link rel="stylesheet" href="canvas.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
-    <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        #drawingCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 2px solid black;
-        }
-
-        /* Dropdown Button */
-        /* .dropbtn {
-            background-color: #3498DB;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        } */
-
-        /* Dropdown button on hover & focus */
-        /* .dropbtn:hover,
-        .dropbtn:focus {
-            background-color: #2980B9;
-        } */
-
-        /* The container <div> - needed to position the dropdown content */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* Dropdown Content (Hidden by Default) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-        /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-        .show {
-            display: block;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 
 <body>
 
+    <h3>Prompt ala bala</h3>
+
     <button id="edit" width="100px">edit</button>
     <button id="clear" width="100px">clear</button>
-
 
     <button id="rec" width="100px">rectangle</button>
     <input id="colorPicker2"
@@ -97,31 +32,55 @@
         <button onclick="myFunction()" class="dropbtn">Dropdown</button>
         <div id="myDropdown" class="dropdown-content">
             <a id="circle">circle brush</a>
-            <a id="pattern">pattern</a>
             <a id="pencil">pencil</a>
             <a id="spray">spray</a>
             <a id="def">Default</a>
         </div>
     </div>
-    <!-- radio bar for width -->
 
-    <canvas id="drawingCanvas" width="1000" height="500"></canvas>
+    <div id="brushWidth">
+        <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
+    </div>
+
+    <button id="done">done</button>
+    <button id="save">download</button>
+    <button id="delete">delete</button>
+
+    <label for="imageLoader">Add img</label>
+    <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+
+    <div id="canvas-container">
+        <canvas id="drawingCanvas"></canvas>
+    </div>
+
+    <script src="script.js"></script>
 
     <script>
-        var canvas = new fabric.Canvas('drawingCanvas', {
-            isDrawingMode: true
-        });
 
-        var color = document.getElementById("colorPicker").value;
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height)*0.85;
+
+        var canvas = new fabric.Canvas('drawingCanvas', {
+            isDrawingMode: true,
+            backgroundColor: 'white',
+            width: width,
+            height: height
+        });
+        
+        canvas.width = width;
+        canvas.height = height;
+
+        canvas.freeDrawingBrush.quality = 'high'; 
+
+        var isDrawingMode = true;
+        const defaultBrush = canvas.freeDrawingBrush;
+        canvas.freeDrawingBrush.width = 5;
+
         colorPicker.addEventListener('change', function () {
             canvas.freeDrawingBrush.color = this.value;
         });
 
         var rect = new fabric.Rect();
-        var isDrawingMode = true;
-        const defaultBrush = canvas.freeDrawingBrush;
-        canvas.freeDrawingBrush.width = 5;
-        canvas.freeDrawingBrush.color = color;
 
         document.getElementById("edit").addEventListener('click', function () {
             canvas.isDrawingMode = false;
@@ -133,6 +92,8 @@
 
         document.getElementById("clear").addEventListener('click', function () {
             canvas.clear()
+            canvas.setBackgroundColor('white');
+            canvas.renderAll();
         })
 
         document.getElementById("rec").addEventListener('click', function () {
@@ -151,36 +112,79 @@
                     selectable: true
                 });
             });
-
+            canvas.renderAll();
         })
 
         document.getElementById("check").addEventListener('click', function () {
-
             canvas.add(rect);
             document.getElementById("colorPicker2").style.display = "none";
             document.getElementById("check").style.display = "none";
-
         })
+
 
         document.getElementById("circle").addEventListener('click', function () {
-            canvas.freeDrawingBrush = new fabric.CircleBrush(canvas)
-
-            canvas.freeDrawingBrush.width = 5;
+            var color = document.getElementById("colorPicker").value;
+            var opacity = parseInt(color.substr(6, 2), 16) / 255; 
+            canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
             canvas.freeDrawingBrush.color = color;
-        })
+            canvas.freeDrawingBrush.opacity = opacity; 
+        });
 
-        document.getElementById("pattern").addEventListener('click', function () {
-            canvas.freeDrawingBrush = new fabric.PatternBrush(canvas)
-        })
         document.getElementById("pencil").addEventListener('click', function () {
-            canvas.freeDrawingBrush = new fabric.PencilBrush(canvas)
-        })
+            canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+            canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
+        });
+
         document.getElementById("spray").addEventListener('click', function () {
-            canvas.freeDrawingBrush = new fabric.SprayBrush(canvas)
-        })
+            canvas.freeDrawingBrush = new fabric.SprayBrush(canvas);
+            canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
+        });
+
         document.getElementById("def").addEventListener('click', function () {
             canvas.freeDrawingBrush = defaultBrush;
+            canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
+        });
+
+        document.getElementById("brushSize").addEventListener('input', function () {
+            canvas.freeDrawingBrush.width = parseInt(this.value, 10);
+        });
+
+        document.getElementById("done").addEventListener('click', function () {
+            var svg = canvas.toSVG()
+            //returnva svg string koito posle bi trqbvalo lesno da napravim na svg file za store
+            console.log("saved idk");
         })
+
+        document.getElementById("save").addEventListener('click', function () {
+            canvas.getElement().toBlob(function (blob) {
+                saveAs(blob, "image.png");
+            });
+        })
+
+        document.getElementById('imageLoader').addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                var imgObj = new Image();
+                imgObj.src = event.target.result;
+
+                imgObj.onload = function () {
+                    var fabricImg = new fabric.Image(imgObj);
+
+                    if (fabricImg.width > canvas.width || fabricImg.height > canvas.height) {
+                        var scaleFactor = Math.min(canvas.width / fabricImg.width, canvas.height / fabricImg.height);
+                        fabricImg.scale(scaleFactor);
+                    }
+
+                    canvas.add(fabricImg);
+                    canvas.renderAll();
+                };
+            };
+
+            reader.readAsDataURL(file);
+        });
+
 
         function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
@@ -189,15 +193,27 @@
         window.onclick = function (event) {
             if (!event.target.matches('.dropbtn')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
+                for (var i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];
                     if (openDropdown.classList.contains('show')) {
                         openDropdown.classList.remove('show');
                     }
                 }
             }
-        } 
+        }
+
+        function deleteElement() {
+            var el = canvas.getActiveObject();
+            if (el) {
+                canvas.remove(el);
+                canvas.rebderAll();
+            }
+        }
+
+        document.getElementById("delete").addEventListener('click', function () {
+            deleteElement();
+        });
+
     </script>
 </body>
 
