@@ -19,7 +19,7 @@ def chat_with_gpt(prompt):
             }
         ],
         model="gpt-3.5-turbo",
-        temperature=2
+        temperature=1.99
     )
     return response.choices[0].message.content
 
