@@ -32,13 +32,13 @@ def generate_prompt():
     
     return jsonify({'prompt': generated_prompt})
 
-@app.route('/prompts/<user_id>', methods=['GET'])
-def get_prompts(user_id):
-    blacklist_ref = db.collection("Blacklist").document(user_id)
-    blacklist_data = blacklist_ref.get()
-    if not blacklist_data.exists:
-        return jsonify({'error': 'User has no prompts'}), 404
+# @app.route('/prompts/<user_id>', methods=['GET'])
+# def get_prompts(user_id):
+#     blacklist_ref = db.collection("Blacklist").document(user_id)
+#     blacklist_data = blacklist_ref.get()
+#     if not blacklist_data.exists:
+#         return jsonify({'error': 'User has no prompts'}), 404
     
-    prompts = blacklist_data.to_dict().get("prompts", [])
+#     prompts = blacklist_data.to_dict().get("prompts", [])
     
-    return jsonify({'prompts': prompts})
+#     return jsonify({'prompts': prompts})
