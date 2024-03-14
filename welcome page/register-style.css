@@ -2,7 +2,6 @@ body{
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #FFFFCC, #FFD700);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -13,7 +12,7 @@ body{
 #feedback-form {
     width: 280px;
     margin: 0 auto;
-    background-color: #fcfcfc;
+    background: linear-gradient(to right, #d5acf0, #f9cede, #a8f4f4);
     padding: 20px 50px 40px;
     box-shadow: 1px 4px 10px 1px #aaa;
     font-family: sans-serif;
@@ -21,6 +20,8 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 240px;
+
   }
   
   
@@ -78,10 +79,10 @@ body{
     box-shadow: 1px 4px 10px 1px #aaa;
     
     /* Background with yellow gradients */
-    background: #f3d250; /* Old browsers */
-    background: -moz-linear-gradient(left, #f3d250 0%, #f5bb1c 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, #f3d250 0%,#f5bb1c 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, #f3d250 0%,#f5bb1c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: black; /* Old browsers */
+    background: -moz-linear-gradient(left, black 0%, black 100%); 
+    background: -webkit-linear-gradient(left, black 0%,black 100%); 
+    background: linear-gradient(to right, black 0%,black 100%); 
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3d250', endColorstr='#ffcc00',GradientType=1 ); /* IE6-9 */
   }
   

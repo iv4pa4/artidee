@@ -6,16 +6,56 @@
 
 <title>Gradient Background with Buttons and Image</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
-    <h1>artidee</h1>
-<div class="container">
-    <div class="button-container">
-        <a href="register.html" class="button">Register</a>
-        <a href="login.html" class="button">Login</a>
-    </div>
-    <img src="cute-fat-bee-sticker.png" alt="Image">
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="#">
+            <h1>artidee</h1>
+            <br />
+            <br />
+			<h1>Create Account</h1>
+            <br/>
+			<input type="text" placeholder="Name" />
+			<input type="email" placeholder="Email" />
+			<input type="password" placeholder="Password" />
+			<button class="gradient-border">Sign Up</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="#">
+            <h1>artidee</h1>
+            <br />
+            <br />
+			<h1>Login</h1>
+			<br />
+            <br />
+			<input type="email" placeholder="Email" />
+			<input type="password" placeholder="Password" />
+			<a href="#">Forgot your password?</a>
+			<button>Login</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+                <img src="drw.png" alt="aaa">
+				<p>You already have account?</p>
+				<button class="ghost" id="signIn">Login Now</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+                <img src="drw.png" alt="aaa">
+				<p>You don't have account?</p>
+				<button class="ghost" id="signUp">Create account</button>
+			</div>
+		</div>
+	</div>
 </div>
 
+
 </body>
+<script src="script_home.js"></script>
 </html>
