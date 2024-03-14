@@ -26,14 +26,10 @@ def sign_up() -> UserRecord:
         # Catch any other unexpected errors
         return jsonify({"msg": str(e)}), 500
 
-    return jsonify({"message": auth.get_user_by_email(email).uid}), 200
+    return jsonify({"message": auth.get_user_by_email(request.json['email']).uid}), 200
 
 @app.route('/login', methods=['POST'])
 def log_in() -> UserRecord:
-    json_data = request.json
-    email = json_data.get('email')
-    password = json_data.get('password')
-
     key = open(os.path.join(os.getcwd(), "app\\web_api_key.txt"), 'r')
     response = requests.post(auth_url,
                     params={"key": key.read()},
@@ -42,5 +38,4 @@ def log_in() -> UserRecord:
     if response.status_code >= 300:
         return response.text, response.status_code
     else:
-        print('upload image')
-        return jsonify({"message": auth.get_user_by_email(email).uid}), response.status_code
+        return jsonify({"message": auth.get_user_by_email(request.json['email']).uid}), response.status_code
