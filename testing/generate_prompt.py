@@ -49,7 +49,11 @@ def prompt(mood, abstraction, additional, user_id):
     if "user_id" not in blacklist_data.to_dict():
         blacklist_ref.update({"user_id": user_id})
 
-    return response
+    response = response.strip('/"')
+    
+    if response in blacklist:
+        return prompt(mood, abstraction, additional, user_id)
 
+    return response
 
 # print(prompt(mood, abstraction, additional, user_id))
