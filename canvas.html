@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas with Selectable Items and Drawing</title>
+    <title>Daily Prompt</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         body,
         html {
@@ -80,17 +81,19 @@
             <a id="def">Default</a>
         </div>
     </div>
-    
+
     <div id="brushWidth">
         <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
     </div>
 
-    <button id="save">save</button>
+    <button id="done">done</button>
+    <button id="save">download</button>
     <canvas id="drawingCanvas" width="1000" height="500"></canvas>
 
     <script>
         var canvas = new fabric.Canvas('drawingCanvas', {
-            isDrawingMode: true
+            isDrawingMode: true,
+            backgroundColor: 'white'
             // renderOnAddRemove: false, // Disable render on add/remove
             // enableRetinaScaling: false // Disable retina scaling
         });
@@ -117,6 +120,8 @@
 
         document.getElementById("clear").addEventListener('click', function () {
             canvas.clear()
+            canvas.setBackgroundColor('white');
+            canvas.renderAll();
         })
 
         document.getElementById("rec").addEventListener('click', function () {
@@ -172,10 +177,16 @@
             canvas.freeDrawingBrush.width = parseInt(this.value, 10);
         });
 
-        document.getElementById("save").addEventListener('click', function(){
+        document.getElementById("done").addEventListener('click', function () {
             var svg = canvas.toSVG()
             //returnva svg string koito posle bi trqbvalo lesno da napravim na svg file za store
             console.log("saved idk");
+        })
+
+        document.getElementById("save").addEventListener('click', function () {
+            canvas.getElement().toBlob(function (blob) {
+                saveAs(blob, "image.png");
+            });
         })
 
         function myFunction() {
