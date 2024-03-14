@@ -80,8 +80,12 @@
             <a id="def">Default</a>
         </div>
     </div>
-    <!-- radio bar for width -->
+    
+    <div id="brushWidth">
+        <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
+    </div>
 
+    <button id="save">save</button>
     <canvas id="drawingCanvas" width="1000" height="500"></canvas>
 
     <script>
@@ -142,8 +146,11 @@
 
 
         document.getElementById("circle").addEventListener('click', function () {
+            var color = document.getElementById("colorPicker").value;
+            var opacity = parseInt(color.substr(6, 2), 16) / 255; // Extract alpha channel from hex color
             canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
-            canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
+            canvas.freeDrawingBrush.color = color;
+            canvas.freeDrawingBrush.opacity = opacity; // Set opacity for the brush
         });
 
         document.getElementById("pencil").addEventListener('click', function () {
@@ -160,6 +167,16 @@
             canvas.freeDrawingBrush = defaultBrush;
             canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
         });
+
+        document.getElementById("brushSize").addEventListener('input', function () {
+            canvas.freeDrawingBrush.width = parseInt(this.value, 10);
+        });
+
+        document.getElementById("save").addEventListener('click', function(){
+            var svg = canvas.toSVG()
+            //returnva svg string koito posle bi trqbvalo lesno da napravim na svg file za store
+            console.log("saved idk");
+        })
 
         function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
