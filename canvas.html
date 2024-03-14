@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas with Selectable Items and Drawing</title>
+    <title>Daily Prompt</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         body,
         html {
@@ -53,6 +54,14 @@
         .show {
             display: block;
         }
+
+        /* 
+        .add-img{
+            background-color: aquamarine;
+            width: 30px;
+            height: 10px;
+            display: relative;
+        } */
     </style>
 </head>
 
@@ -80,13 +89,23 @@
             <a id="def">Default</a>
         </div>
     </div>
-    <!-- radio bar for width -->
+
+    <div id="brushWidth">
+        <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
+    </div>
+
+    <button id="done">done</button>
+    <button id="save">download</button>
+
+    <label for="imageLoader">Add img</label>
+    <input type="file" id="imageLoader" accept="image/*" style="display: none;">
 
     <canvas id="drawingCanvas" width="1000" height="500"></canvas>
 
     <script>
         var canvas = new fabric.Canvas('drawingCanvas', {
-            isDrawingMode: true
+            isDrawingMode: true,
+            backgroundColor: 'white'
             // renderOnAddRemove: false, // Disable render on add/remove
             // enableRetinaScaling: false // Disable retina scaling
         });
@@ -113,6 +132,8 @@
 
         document.getElementById("clear").addEventListener('click', function () {
             canvas.clear()
+            canvas.setBackgroundColor('white');
+            canvas.renderAll();
         })
 
         document.getElementById("rec").addEventListener('click', function () {
@@ -142,8 +163,11 @@
 
 
         document.getElementById("circle").addEventListener('click', function () {
+            var color = document.getElementById("colorPicker").value;
+            var opacity = parseInt(color.substr(6, 2), 16) / 255; // Extract alpha channel from hex color
             canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
-            canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
+            canvas.freeDrawingBrush.color = color;
+            canvas.freeDrawingBrush.opacity = opacity; // Set opacity for the brush
         });
 
         document.getElementById("pencil").addEventListener('click', function () {
@@ -160,6 +184,47 @@
             canvas.freeDrawingBrush = defaultBrush;
             canvas.freeDrawingBrush.color = document.getElementById("colorPicker").value;
         });
+
+        document.getElementById("brushSize").addEventListener('input', function () {
+            canvas.freeDrawingBrush.width = parseInt(this.value, 10);
+        });
+
+        document.getElementById("done").addEventListener('click', function () {
+            var svg = canvas.toSVG()
+            //returnva svg string koito posle bi trqbvalo lesno da napravim na svg file za store
+            console.log("saved idk");
+        })
+
+        document.getElementById("save").addEventListener('click', function () {
+            canvas.getElement().toBlob(function (blob) {
+                saveAs(blob, "image.png");
+            });
+        })
+
+        document.getElementById('imageLoader').addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                var imgObj = new Image();
+                imgObj.src = event.target.result;
+
+                imgObj.onload = function () {
+                    var fabricImg = new fabric.Image(imgObj);
+
+                    if (fabricImg.width > canvas.width || fabricImg.height > canvas.height) {
+                        var scaleFactor = Math.min(canvas.width / fabricImg.width, canvas.height / fabricImg.height);
+                        fabricImg.scale(scaleFactor);
+                    }
+
+                    canvas.add(fabricImg);
+                    canvas.renderAll();
+                };
+            };
+
+            reader.readAsDataURL(file);
+        });
+
 
         function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
