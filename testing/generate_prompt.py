@@ -1,4 +1,4 @@
-from gpt import chat_with_gpt
+from testing.gpt import chat_with_gpt
 import os
 import firebase_admin
 from firebase_admin import credentials
@@ -35,8 +35,8 @@ print("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, 
 def prompt(mood, abstraction, additional, user_id):
     response = chat_with_gpt("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, " + abstractions[abstraction] + additional + ". Be very brief - a few words or a sentence at most.")
 
-    if response in blacklist:
-        prompt(mood, abstraction, additional, user_id)
+    # if response in blacklist:
+    #     prompt(mood, abstraction, additional, user_id)
             
     blacklist_ref = db.collection("Blacklist").document(user_id)
     blacklist_data = blacklist_ref.get()

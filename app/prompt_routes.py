@@ -25,7 +25,7 @@ def generate_prompt():
     additional = data.get('additional')
     user_id = data.get('user_id')
 
-    if not all([mood, abstraction, additional, user_id]):
+    if not all([mood, abstraction, user_id]):
         return jsonify({'error': 'Missing parameters'}), 400
     
     generated_prompt = prompt(mood, abstraction, additional, user_id)
