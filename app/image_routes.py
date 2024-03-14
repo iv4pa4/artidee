@@ -13,9 +13,14 @@ from firebase_admin import auth
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    json_data = request.json
-    uid = json_data['uid']
-    filename = json_data['filename']
-
-    update_time, doc_id = db.collection("Images").add({"filename": filename, "user_id": uid})
+    update_time, doc_id = db.collection("Images").add({"filename": request.json['filename'], "user_id": request.json['user_id']})
     return jsonify({"message": doc_id.id}), 200
+
+@app.route('/get_gallery', methods=['POST'])
+def get_gallery():
+    query = db.collection("Images").where('user_id', '==', request.json['user_id'])
+    docs = query.stream()
+    jsons = []
+    for doc in docs:
+        jsons.append(doc.get('filename'))
+    return json.dumps(jsons), 200
