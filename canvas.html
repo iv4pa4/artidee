@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas with Selectable Items and Drawing</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <style>
         body, html {
             margin: 0;
@@ -29,11 +30,18 @@
     <button id="edit" width="100px">edit</button>
     <button id="brush" width="100px">brush</button>
 
+    <input id="colorPicker" data-jscolor="{ value: '#33AACC80', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"> 
+
 
     <script>
         var canvas = new fabric.Canvas('drawingCanvas',{
             isDrawingMode: true 
         });
+
+        var color = document.getElementById("colorPicker").value;
+        colorPicker.addEventListener('change', function() {
+        canvas.freeDrawingBrush.color = this.value;
+    });
 
         var rect = new fabric.Rect({
             left: 100,
@@ -48,24 +56,8 @@
         canvas.add(rect);
         var isDrawingMode = true;
 
-        // canvas.on('mouse:down', function(event) {
-        //     if (event.target && event.target.selectable) {
-        //         isDrawingMode = false; // Disable drawing mode if clicking on selectable object
-        //         canvas.discardActiveObject();
-        //     } else {
-        //         isDrawingMode = true; // Enable drawing mode if clicking outside selectable object
-        //     }
-        //     canvas.isDrawingMode = isDrawingMode;
-        // });
-        
-
         canvas.freeDrawingBrush.width = 5;
-        canvas.freeDrawingBrush.color = 'black';
-
-        // canvas.on('path:created', function(event) {
-        //     var path = event.path;
-        //     path.set({ selectable: false }); // Make the drawn path not selectable
-        // });
+        canvas.freeDrawingBrush.color = color;
 
         document.getElementById("edit").addEventListener('click', function() {
             canvas.isDrawingMode=false;
