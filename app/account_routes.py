@@ -13,12 +13,8 @@ from firebase_admin.auth import UserRecord
 
 @app.route('/signup', methods=['POST'])
 def sign_up() -> UserRecord:
-    json_data = request.json
-    email = json_data.get('email')
-    password = json_data.get('password')
-
     try:
-        auth.create_user(email=email, password=password)
+        auth.create_user(email=request.json['email'], password=request.json['password'], display_name=request.json['display_name'])
     except ValueError as ve:
         # Handle ValueError (raised when email or password is invalid)
         return jsonify({"msg": str(ve)}), 400
