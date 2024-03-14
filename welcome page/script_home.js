@@ -35,6 +35,7 @@ doSignUpButton.addEventListener('click', () => {
   		console.log('Success:', data);
   		console.log('Message:', data.message);
 		localStorage.setItem('userID', data.message);
+		window.location.href = '../main%20page/main.html';
 	})
 	.catch((error) => {
   		console.error('Error:', error);
@@ -61,6 +62,7 @@ doLoginButton.addEventListener('click', () => {
   		console.log('Success:', data);
   		console.log('Message:', data.message);
 		localStorage.setItem('userID', data.message);
+		window.location.href = '../main%20page/main.html';
 	})
 	.catch((error) => {
   		console.error('Error:', error);
