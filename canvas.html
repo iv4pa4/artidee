@@ -5,67 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Prompt</title>
+    <link rel="stylesheet" href="canvas.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        #drawingCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 2px solid black;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-        .show {
-            display: block;
-        }
-
-        /* 
-        .add-img{
-            background-color: aquamarine;
-            width: 30px;
-            height: 10px;
-            display: relative;
-        } */
-    </style>
 </head>
 
 <body>
+
+    <h3>Prompt ala bala</h3>
 
     <button id="edit" width="100px">edit</button>
     <button id="clear" width="100px">clear</button>
@@ -96,21 +44,33 @@
 
     <button id="done">done</button>
     <button id="save">download</button>
+    <button id="delete">delete</button>
 
     <label for="imageLoader">Add img</label>
     <input type="file" id="imageLoader" accept="image/*" style="display: none;">
 
-    <canvas id="drawingCanvas" width="1000" height="500"></canvas>
+    <div id="canvas-container">
+        <canvas id="drawingCanvas"></canvas>
+    </div>
+
+    <script src="script.js"></script>
 
     <script>
+
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height)*0.85;
+
         var canvas = new fabric.Canvas('drawingCanvas', {
             isDrawingMode: true,
-            backgroundColor: 'white'
-            // renderOnAddRemove: false, // Disable render on add/remove
-            // enableRetinaScaling: false // Disable retina scaling
+            backgroundColor: 'white',
+            width: width,
+            height: height
         });
+        
+        canvas.width = width;
+        canvas.height = height;
 
-        canvas.freeDrawingBrush.quality = 'high'; // Adjust the quality of the free drawing brush
+        canvas.freeDrawingBrush.quality = 'high'; 
 
         var isDrawingMode = true;
         const defaultBrush = canvas.freeDrawingBrush;
@@ -164,10 +124,10 @@
 
         document.getElementById("circle").addEventListener('click', function () {
             var color = document.getElementById("colorPicker").value;
-            var opacity = parseInt(color.substr(6, 2), 16) / 255; // Extract alpha channel from hex color
+            var opacity = parseInt(color.substr(6, 2), 16) / 255; 
             canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
             canvas.freeDrawingBrush.color = color;
-            canvas.freeDrawingBrush.opacity = opacity; // Set opacity for the brush
+            canvas.freeDrawingBrush.opacity = opacity; 
         });
 
         document.getElementById("pencil").addEventListener('click', function () {
@@ -241,6 +201,18 @@
                 }
             }
         }
+
+        function deleteElement() {
+            var el = canvas.getActiveObject();
+            if (el) {
+                canvas.remove(el);
+                canvas.rebderAll();
+            }
+        }
+
+        document.getElementById("delete").addEventListener('click', function () {
+            deleteElement();
+        });
 
     </script>
 </body>
