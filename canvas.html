@@ -87,13 +87,15 @@
     <script>
         var canvas = new fabric.Canvas('drawingCanvas', {
             isDrawingMode: true
+            // renderOnAddRemove: false, // Disable render on add/remove
+            // enableRetinaScaling: false // Disable retina scaling
         });
+
+        canvas.freeDrawingBrush.quality = 'high'; // Adjust the quality of the free drawing brush
 
         var isDrawingMode = true;
         const defaultBrush = canvas.freeDrawingBrush;
-        var color = document.getElementById("colorPicker").value;
         canvas.freeDrawingBrush.width = 5;
-        canvas.freeDrawingBrush.color = color;
 
         colorPicker.addEventListener('change', function () {
             canvas.freeDrawingBrush.color = this.value;
@@ -129,7 +131,7 @@
                     selectable: true
                 });
             });
-
+            canvas.renderAll();
         })
 
         document.getElementById("check").addEventListener('click', function () {
@@ -174,8 +176,8 @@
                 }
             }
         }
+
     </script>
 </body>
 
 </html>
-
