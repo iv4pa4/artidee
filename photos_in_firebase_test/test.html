@@ -86,9 +86,9 @@
     }
 
     async function UploadProcess() {
-    var ImgToUpload = files[0];
-    var ImgName = namebox.value + extlab.innerHTML; 
-    const metaData = {
+        var ImgToUpload = files[0];
+        var ImgName = namebox.value + extlab.innerHTML; 
+        const metaData = {
         contentType: ImgToUpload.type
     }
 
@@ -104,30 +104,30 @@
     }
     }
 
-    async function GetImageFromFirestore(){
+    async function GetImageFromFirestore() {
         var name = namebox.value;
         var ref = doc(clouddb, "Images/" + name);
         const docSnap = await getDoc(ref);
-        if (docSnap.exists()){
+        if (docSnap.exists()) {
             myimg.src = docSnap.data().filename;
         }
 
     }
 
-    async function GetImageFromFirestore1(){
-    var name = namebox.value;
-    const storage = getStorage();
-    const storageRef = sRef(storage, "Images/" + name);
+    async function GetImageFromFirestore1() {
+        var name = namebox.value;
+        const storage = getStorage();
+        const storageRef = sRef(storage, "Images/" + name);
     
-    try {
-        const downloadURL = await getDownloadURL(storageRef);
-        myimg.src = downloadURL;
-        console.log("Image retrieved successfully:", downloadURL);
-    } catch (error) {
-        console.error("Error retrieving image:", error);
-        alert("Error: Image not found!");
+        try {
+            const downloadURL = await getDownloadURL(storageRef);
+            myimg.src = downloadURL;
+            console.log("Image retrieved successfully:", downloadURL);
+        } catch (error) {
+            console.error("Error retrieving image:", error);
+            alert("Error: Image not found!");
+        }
     }
-}
 
 
 
