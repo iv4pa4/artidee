@@ -1,5 +1,10 @@
+import json
+import requests
+import os
+
 from app import app
 from app import base
+from app import auth_url
 
 from flask import request, jsonify
 
@@ -21,10 +26,17 @@ def sign_up() -> UserRecord:
         # Catch any other unexpected errors
         return jsonify({"msg": str(e)}), 500
 
-    return jsonify({"msg": "User created successfully"}), 200
+    return jsonify({"message": "User created successfully"}), 200
 
 @app.route('/login', methods=['POST'])
 def log_in() -> UserRecord:
     json_data = request.json
     email = json_data.get('email')
-    password = 
+    password = json_data.get('password')
+
+    key = open(os.path.join(os.getcwd(), "app\\web_api_key.txt"), 'r')
+    response = requests.post(auth_url,
+                    params={"key": key.read()},
+                    data=request.json)
+
+    return response.text, response.status_code

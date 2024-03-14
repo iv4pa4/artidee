@@ -9,7 +9,7 @@ cred = credentials.Certificate(os.path.join(os.getcwd(), "app\\kocosi-firebase-k
 
 base = firebase_admin.initialize_app(cred)
 
-auth_url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]"
+auth_url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword"
 
 app = Flask(__name__)
 
