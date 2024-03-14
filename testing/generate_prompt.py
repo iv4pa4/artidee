@@ -4,9 +4,16 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-cred = credentials.Certificate(os.path.join(os.getcwd(), "app\\kocosi-firebase-key.json"))
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+import json
+import requests
+import os
+
+from app import app
+from app import base
+from app import db
+from app import auth_url
+
+from firebase_admin import auth
 
 mood = 3
 abstraction = 2
@@ -29,7 +36,7 @@ def prompt(mood, abstraction, additional, user_id):
     response = chat_with_gpt("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, " + abstractions[abstraction] + additional + ". Be very brief - a few words or a sentence at most.")
 
     if response in blacklist:
-        prompt(mood, abstraction, additional)
+        prompt(mood, abstraction, additional, user_id)
             
     blacklist_ref = db.collection("Blacklist").document(user_id)
     blacklist_data = blacklist_ref.get()
