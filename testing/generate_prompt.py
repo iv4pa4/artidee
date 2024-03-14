@@ -1,8 +1,8 @@
 from gpt import chat_with_gpt
 from blacklist import blacklist
 
-mood = 4
-abstraction = 0
+mood = 3
+abstraction = 2
 additional = ""
 if additional:
     additional = "And " + additional
@@ -21,9 +21,8 @@ print("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, 
 def prompt(mood, abstraction, additional):
     response = chat_with_gpt("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, " + abstractions[abstraction] + additional + ". Be very brief - a few words or a sentence at most.")
 
-    for sentence in blacklist:
-        if response == sentence:
-            prompt(mood, abstraction, additional)
+    if response in blacklist:
+        prompt(mood, abstraction, additional)
             
     blacklist.append(response)
 
