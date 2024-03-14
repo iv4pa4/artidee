@@ -3,47 +3,48 @@ const images = getImages();
 function loadImages() {
     const gallery = document.getElementById('gallery');
 
-    images.forEach((src) => {
+    images.forEach(({src, description}) => {
         const box = document.createElement('div');
         box.className = 'box';
+
+        const descElement = document.createElement('p');
+        descElement.textContent = description;
+        descElement.className = 'image-description';
 
         const img = document.createElement('img');
         img.src = src;
 
         img.onclick = function() {
-            const modal = document.getElementById('imagePopup');
-            const modalImg = document.getElementById('popupImg');
-            modal.style.display = "block";
-            modalImg.src = this.src;
+        document.getElementById('imagePopup').style.display = "block";
+        document.getElementById('popupImg').src = this.src;
+        document.getElementById('caption').innerText = description;
+        document.body.classList.add('no-scroll');
         };
 
+        window.onclick = function(event) {
+        if (event.target == modal) {
+                modal.style.display = "none";
+                document.body.classList.remove('no-scroll');
+            }
+        }
+
+        box.appendChild(descElement);
         box.appendChild(img);
         gallery.appendChild(box);
     });
 
     const modal = document.getElementById('imagePopup');
 
-    const span = document.getElementsByClassName("close")[0];
-
-    span.onclick = function() { 
-        modal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
 }
 
 function getImages() {
     const res = [ //call backend here :)
-        'image/icon-1.png',
-        'image/icon-2.png',
-        'image/icon-3.png',
-        'image/icon-4.png',
-        'image/icon-5.png',
-        'image/icon-6.png',
+        { src: 'image/icon-1.png', description: 'Description for Image 1' },
+        { src: 'image/icon-2.png', description: 'Description for Image 2' },
+        { src: 'image/icon-3.png', description: 'Description for Image 3' },
+        { src: 'image/icon-4.png', description: 'Description for Image 4' },
+        { src: 'image/icon-5.png', description: 'Description for Image 5' },
+        { src: 'image/icon-6.png', description: 'Description for Image 6' },
     ];
     
     return res;
