@@ -16,3 +16,13 @@ def upload():
     json_data = request.json
     uid = json_data['uid']
     filename = json_data['filename']
+
+    key = open(os.path.join(os.getcwd(), "app\\web_api_key.txt"), 'r')
+    response = requests.post(auth_url,
+                    params={"key": key.read()},
+                    data=request.json)
+
+    if response.status_code >= 300:
+        return response.text, response.status_code
+    else:
+        return auth.get_user_by_email(email).uid, response.status_code
