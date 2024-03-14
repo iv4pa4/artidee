@@ -1,5 +1,6 @@
 import os
 
+from google.cloud import firestore
 import firebase_admin
 from firebase_admin import credentials
 
@@ -13,4 +14,7 @@ auth_url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPasswor
 
 app = Flask(__name__)
 
-from app import views
+db = firestore.Client()
+
+from app import account_routes
+from app import image_routes
