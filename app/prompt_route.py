@@ -15,7 +15,7 @@ from flask import Flask, request, jsonify
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-from testing.generate_prompt import prompt
+from app.drawing_prompt import drawing_prompt
 
 @app.route('/prompt', methods=['POST'])
 def generate_prompt():
@@ -28,7 +28,7 @@ def generate_prompt():
     if mood < 0 or mood > 4 or abstraction < 0 or abstraction > 2 or not user_id:
         return jsonify({'error': 'Missing parameters'}), 400
     
-    generated_prompt = prompt(mood, abstraction, additional, user_id)
+    generated_prompt = drawing_prompt(mood, abstraction, additional, user_id)
     
     return jsonify({'prompt': generated_prompt})
 
