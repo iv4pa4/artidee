@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas with Selectable Items and Drawing</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #drawingCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid black;
+        }
+
+    </style>
+</head>
+<body>
+        
+    <canvas id="drawingCanvas" width="1000" height="600"></canvas>
+    <button id="edit" width="100px">edit</button>
+    <button id="brush" width="100px">brush</button>
+
+    <input id="colorPicker" data-jscolor="{ value: '#33AACC80', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"> 
+
+
+    <script>
+        var canvas = new fabric.Canvas('drawingCanvas',{
+            isDrawingMode: true 
+        });
+
+        var color = document.getElementById("colorPicker").value;
+        colorPicker.addEventListener('change', function() {
+        canvas.freeDrawingBrush.color = this.value;
+        });
+
+        var rect = new fabric.Rect({
+            left: 100,
+            top: 100,
+            width: 100,
+            height: 100,
+            fill: 'red',
+            selectable: true
+            
+        });
+
+        canvas.add(rect);
+        var isDrawingMode = true;
+
+        canvas.freeDrawingBrush.width = 5;
+        canvas.freeDrawingBrush.color = color;
+
+        document.getElementById("edit").addEventListener('click', function() {
+            canvas.isDrawingMode=false;
+        })
+
+        document.getElementById("brush").addEventListener('click', function() {
+            canvas.isDrawingMode=true;
+        })
+    </script>
+</body>
+</html>
