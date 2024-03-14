@@ -1,4 +1,5 @@
 from openai import OpenAI
+import random
 
 with open('key.txt', 'r') as file:
     my_key = file.read()
@@ -8,6 +9,8 @@ client = OpenAI(
 )
 
 def chat_with_gpt(prompt):
+    # tempr = random.random() * 2
+    # print(tempr)
     response = client.chat.completions.create(
         messages=[
             {
@@ -15,7 +18,8 @@ def chat_with_gpt(prompt):
                 "content": prompt,
             }
         ],
-        model="gpt-3.5-turbo"
+        model="gpt-3.5-turbo",
+        temperature=2
     )
     return response.choices[0].message.content
 

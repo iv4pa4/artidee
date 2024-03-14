@@ -15,7 +15,7 @@ moods = ("very bad",
 
 abstractions = ("tell me exactly what to draw, nothing abstract.",
                 "give me the main idea on what to draw but be slightly abstract.",
-                "today I feel creative, please give me quite an abstract idea to draw.")
+                "today I feel creative, please give me a very abstract idea to draw.")
 
 print("Please tell me what to draw. My mood today is " + moods[mood] + ". Also, " + abstractions[abstraction] + additional + ". Be very brief - a few words or a sentence at most.")
 def prompt(mood, abstraction, additional):
