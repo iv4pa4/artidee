@@ -54,6 +54,14 @@
         .show {
             display: block;
         }
+
+        /* 
+        .add-img{
+            background-color: aquamarine;
+            width: 30px;
+            height: 10px;
+            display: relative;
+        } */
     </style>
 </head>
 
@@ -88,6 +96,10 @@
 
     <button id="done">done</button>
     <button id="save">download</button>
+
+    <label for="imageLoader">Add img</label>
+    <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+
     <canvas id="drawingCanvas" width="1000" height="500"></canvas>
 
     <script>
@@ -188,6 +200,31 @@
                 saveAs(blob, "image.png");
             });
         })
+
+        document.getElementById('imageLoader').addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                var imgObj = new Image();
+                imgObj.src = event.target.result;
+
+                imgObj.onload = function () {
+                    var fabricImg = new fabric.Image(imgObj);
+
+                    if (fabricImg.width > canvas.width || fabricImg.height > canvas.height) {
+                        var scaleFactor = Math.min(canvas.width / fabricImg.width, canvas.height / fabricImg.height);
+                        fabricImg.scale(scaleFactor);
+                    }
+
+                    canvas.add(fabricImg);
+                    canvas.renderAll();
+                };
+            };
+
+            reader.readAsDataURL(file);
+        });
+
 
         function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
