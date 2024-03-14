@@ -1,5 +1,7 @@
 from openai import OpenAI
-from key import my_key
+
+with open('testing/key.txt', 'r') as file:
+    my_key = file.read()
 
 client = OpenAI(
     api_key=my_key,
