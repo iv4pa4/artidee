@@ -13,42 +13,54 @@
 
 <body>
 
-    <h3>Prompt ala bala</h3>
+    <div class="tool-bar">
+        <div class="promp-cont">
+            <h3 class="promp">Prompt ala bala</h3>
+        </div>
 
-    <button id="edit" width="100px">edit</button>
-    <button id="clear" width="100px">clear</button>
+        <div class="tools">
+            <button id="edit" class="but" >
+                <img class="img" src="imgs/move.png" alt="move">
+                <span class="hover-text">Move</span>
+            </button>
+            <button id="brush" class="but">
+                <img class="img" src="imgs/brush.png" alt="brush">
+                <span class="hover-text">Brush</span>
+            </button>
 
-    <button id="rec" width="100px">rectangle</button>
-    <input id="colorPicker2"
-        data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"
-        style="display: none;">
-    <button id="check" style="display: none;">check</button>
+            <input id="colorPicker" data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 200, height: 120 }">
 
-    <button id="brush" width="100px">brush</button>
-    <input id="colorPicker"
-        data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }">
+            <button id="clear" width="100px">clear</button>
 
-    <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a id="circle">circle brush</a>
-            <a id="pencil">pencil</a>
-            <a id="spray">spray</a>
-            <a id="def">Default</a>
+            <button id="rec" width="100px">rectangle</button>
+            <input id="colorPicker2"
+                data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"
+                style="display: none;">
+            <button id="check" style="display: none;">check</button>
+
+            
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a id="circle">circle brush</a>
+                    <a id="pencil">pencil</a>
+                    <a id="spray">spray</a>
+                    <a id="def">Default</a>
+                </div>
+            </div>
+
+            <div id="brushWidth">
+                <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
+            </div>
+
+            <button id="done">done</button>
+            <button id="save">download</button>
+            <button id="delete">delete</button>
+
+            <label for="imageLoader">Add img</label>
+            <input type="file" id="imageLoader" accept="image/*" style="display: none;">
         </div>
     </div>
-
-    <div id="brushWidth">
-        <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
-    </div>
-
-    <button id="done">done</button>
-    <button id="save">download</button>
-    <button id="delete">delete</button>
-
-    <label for="imageLoader">Add img</label>
-    <input type="file" id="imageLoader" accept="image/*" style="display: none;">
-
     <div id="canvas-container">
         <canvas id="drawingCanvas"></canvas>
     </div>
@@ -58,7 +70,7 @@
     <script>
 
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-        var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height)*0.85;
+        var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.85;
 
         var canvas = new fabric.Canvas('drawingCanvas', {
             isDrawingMode: true,
@@ -66,11 +78,11 @@
             width: width,
             height: height
         });
-        
+
         canvas.width = width;
         canvas.height = height;
 
-        canvas.freeDrawingBrush.quality = 'high'; 
+        canvas.freeDrawingBrush.quality = 'high';
 
         var isDrawingMode = true;
         const defaultBrush = canvas.freeDrawingBrush;
@@ -124,10 +136,10 @@
 
         document.getElementById("circle").addEventListener('click', function () {
             var color = document.getElementById("colorPicker").value;
-            var opacity = parseInt(color.substr(6, 2), 16) / 255; 
+            var opacity = parseInt(color.substr(6, 2), 16) / 255;
             canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
             canvas.freeDrawingBrush.color = color;
-            canvas.freeDrawingBrush.opacity = opacity; 
+            canvas.freeDrawingBrush.opacity = opacity;
         });
 
         document.getElementById("pencil").addEventListener('click', function () {
