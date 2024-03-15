@@ -6,6 +6,8 @@ const container = document.getElementById('container');
 
 const signupName = document.getElementById('signupName')
 
+document.addEventListener('DOMContentLoaded', function() {
+
 signUpButton.addEventListener('click', () => {
 	container.classList.add("right-panel-active");
 });
@@ -13,8 +15,6 @@ signUpButton.addEventListener('click', () => {
 signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
-
-document.addEventListener('DOMContentLoaded', function() {
 doSignUpButton.addEventListener('click', () => {
 	const url = 'https://quant.pythonanywhere.com/signup';
 
