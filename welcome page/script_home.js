@@ -21,7 +21,7 @@ doSignUpButton.addEventListener('click', () => {
 		name: signupName.value,
 		email: document.getElementById('signupEmail').value,
 		password: document.getElementById('signupPassword').value,
-		level: parseInt(document.getElementById('level').value)
+		level: parseInt(document.querySelector('input[name="difficultyLevel"]:checked').value)
 	};
 
 	fetch(url, {
