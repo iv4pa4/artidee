@@ -4,7 +4,7 @@ from firebase_admin import auth
 
 @app.route('/add_friend', methods=['POST'])
 def add_friend():
-    query = db.collection("Connections")
+    query = db.collection("Blacklist")
     docs = query.stream()
     uids = []
     for doc in docs:
