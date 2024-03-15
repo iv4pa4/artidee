@@ -1,16 +1,6 @@
-import json
-import requests
-import os
-
-from app import app
-from app import base
-from app import auth_url
-from app import db
-
+from app import app, base, db
 from flask import request, jsonify
-
 from firebase_admin import auth
-from firebase_admin.auth import UserRecord
 
 @app.route('/add', methods=['POST'])
 def add():
