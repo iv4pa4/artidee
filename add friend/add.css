@@ -29,11 +29,14 @@
 }
 
 button {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
     border-radius: 20px;
     border: 1px solid #bd74ed;
-    background-color: #bd74ed;
+    background: linear-gradient(to right, #bd74ed, #fac6da, #7eeded);
     color: #FFFFFF;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     padding: 12px 45px;
     letter-spacing: 1px;
@@ -41,12 +44,55 @@ button {
     transition: transform 80ms ease-in;
 }
 
-input {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
+.img{
+    height: 15px;
+    width: 15px;
+    margin-left: 5px;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container input {
+    border: 2px solid transparent;
+    width: 100%;
+    height: 2.5em;
+    padding-left: 0.8em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
+    margin-bottom: 2em;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.input-container input:hover {
+    border-color: #bd74ed;
+}
+
+.input-container input:focus {
+    border-color: #bd74ed;
+    background-color: white;
+}
+
+.input-container .gradient-overlay::after {
+    content: '';
+    position: absolute;
+    top: -6%; 
+    left: -0.3%;
+    right: -0.7%; 
+    bottom: 35%; 
+    background: linear-gradient(to right, #bd74ed, #fac6da, #7eeded);
+    z-index: -1;
+    border-radius: 12px; /* Adjusted to make the overlay 2px bigger */
+    transition: opacity 0.3s ease; 
+    opacity: 0; 
+}
+
+.input-container input:hover + .gradient-overlay::after {
+    opacity: 0.3; /* Adjusted opacity value */
 }
 
 #caption {

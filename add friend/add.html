@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="stylesheet" href="add.css">
 
 </head>
-<body>
-    
-<div class="container">
 
-    <h1 class="heading">Friends</h1>
-    
-<input type="text" placeholder="Username" id="username"/>
-    
-    <div class="button-container">
-        <button type="button" class="add" id="add">Add Friend</button>
+<body>
+
+    <div class="container">
+
+        <h1 class="heading">Find your friends</h1>
+
+        <div class="input-container">
+            <input class="input" type="text" placeholder="Who are we searching?" id="username" />
+            <div class="gradient-overlay"></div>
+        </div>
+
+        <div class="button-container">
+            <button type="button" class="add" id="add">
+                Add Friend
+                <img class="img" src="add.png">
+            </button>
+        </div>
     </div>
-</div>
 
 </body>
-    <script src="add.js"></script>
+<script src="add.js"></script>
+
 </html>
