@@ -29,6 +29,8 @@ def add_friend():
             update_time, doc_id = db.collection("Connections").add({"user_id_1": request.json['user_id'], "user_id_2": uid})
             return jsonify({"message": "Friend added successfully"}), 200
 
+    return jsonify({"message": "No such friend found"}), 404
+
 @app.route('/friends', methods=['GET'])
 def get_friends():
     data = request.json
