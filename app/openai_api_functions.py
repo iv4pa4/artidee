@@ -19,3 +19,14 @@ def prompt_maker(prompt):
         temperature=1.5
     )
     return response.choices[0].message.content
+
+def image_generator(prompt):
+    response = client.images.generate(
+        model="dall-e-2",
+        prompt=prompt,
+        size="512x512",
+        quality="standard",
+        n=1,
+    )
+
+    return response.data[0].url

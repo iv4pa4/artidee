@@ -1,4 +1,4 @@
-from app.prompt_maker import prompt_maker
+from app.openai_api_functions import prompt_maker
 from app import db
 from firebase_admin import firestore
 
