@@ -81,12 +81,17 @@
     </div>
     <div id="canvas-container">
         <canvas id="drawingCanvas"></canvas>
+        <img src="" id="promptImage">
     </div>
+    
+    
 
     <script type="module">
-
-        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+       	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.85;
+	if (true) {
+       		width = width/2
+	}
 
         var canvas = new fabric.Canvas('drawingCanvas', {
             isDrawingMode: true,
@@ -330,7 +335,11 @@
             .then(data => {
                 console.log('Success:', data);
                 console.log('Message:', data.prompt);
-                document.getElementById("prompt").textContent = data.prompt
+                console.log('Message:', data.image_url);
+                document.getElementById("prompt").textContent = data.prompt;
+                if (data.image_url != null) {
+                	document.getElementById("promptImage").src = data.image_url;
+                }
                 prompt = data.prompt;
             })
             .catch((error) => {
