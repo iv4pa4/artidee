@@ -31,7 +31,7 @@ def add_friend():
 
     return jsonify({"message": "No such friend found"}), 404
 
-@app.route('/friends', methods=['GET'])
+@app.route('/friends', methods=['POST'])
 def get_friends():
     data = request.json
     user_id = data.get('user_id')
