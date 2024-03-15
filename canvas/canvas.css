@@ -3,7 +3,7 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 #drawingCanvas {
@@ -12,7 +12,7 @@ html {
     left: 0;
     right: 0;
     bottom: 0;
-    width: 500px;
+    /* width: 500px; */
     border: 2px solid rgb(234, 0, 255);
     box-sizing: border-box;
 }
@@ -41,7 +41,6 @@ canvas-container {
     width: 100%;
     height: 50%;
     align-items: center;
-    /* justify-content: space-between; */
 }
 
 .but {
@@ -142,4 +141,15 @@ canvas-container {
 }
 .but2:hover .hover-text {
     opacity: 1; 
+}
+
+.canvas-container{
+    display: flex;
+    align-items: center;
+}
+
+.example{
+    width: 44%;
+    margin-left: 5px;
+    border: 2px solid black;
 }

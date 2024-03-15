@@ -53,7 +53,7 @@
 
 
             <div class="dropdown">
-                <button  id="drp" class="but2">Brushes</button>
+                <button id="drp" class="but2">Brushes</button>
                 <div id="myDropdown" class="dropdown-content">
                     <a id="circle">circle brush</a>
                     <a id="pencil">pencil</a>
@@ -90,18 +90,17 @@
             </button>
         </div>
     </div>
-    <div id="canvas-container">
+    <div class="canvas-container">
         <canvas id="drawingCanvas"></canvas>
-        <img src="" id="promptImage">
+        <img src="" id="promptImage" class="example">
     </div>
-
-
 
     <script type="module">
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-        var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.85;
+        var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.87;
         if (true) {
-            width = width / 2
+            width = width * 0.55
+            height = 575
         }
 
         var canvas = new fabric.Canvas('drawingCanvas', {
@@ -143,7 +142,7 @@
         })
 
         document.getElementById("rec").addEventListener('click', function () {
-            document.getElementById("colorPicker2").style.display = "block";    
+            document.getElementById("colorPicker2").style.display = "block";
             document.getElementById("check").style.display = "block";
 
             var col = document.getElementById("colorPicker2").value;
@@ -161,10 +160,10 @@
             canvas.renderAll();
         });
 
-        document.getElementById("drp").addEventListener('click', function(){
+        document.getElementById("drp").addEventListener('click', function () {
             document.getElementById("myDropdown").classList.toggle("show");
         })
-        
+
         document.getElementById("check").addEventListener('click', function () {
             canvas.add(rect);
             document.getElementById("colorPicker2").style.display = "none";
@@ -243,7 +242,7 @@
         });
 
 
-        
+
 
         window.onclick = function (event) {
             if (!event.target.matches('.but2')) {
