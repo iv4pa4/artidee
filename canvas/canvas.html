@@ -9,8 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="../gallery2.0/var.js"></script>
-
 </head>
 
 <body>
@@ -21,7 +19,7 @@
         </div>
 
         <div class="tools">
-            <button id="edit" class="but" >
+            <button id="edit" class="but">
                 <img class="img" src="imgs/move.png" alt="move">
                 <span class="hover-text">Move</span>
             </button>
@@ -30,7 +28,8 @@
                 <span class="hover-text">Brush</span>
             </button>
 
-            <input id="colorPicker" data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 200, height: 120 }">
+            <input id="colorPicker"
+                data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 200, height: 120 }">
 
             <button id="clear" width="100px">clear</button>
 
@@ -40,7 +39,7 @@
                 style="display: none;">
             <button id="check" style="display: none;">check</button>
 
-            
+
             <div class="dropdown">
                 <button onclick="myFunction()" class="dropbtn">Dropdown</button>
                 <div id="myDropdown" class="dropdown-content">
@@ -55,19 +54,39 @@
                 <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
             </div>
 
-            <button id="done">done</button>
-            <button id="save">download</button>
-            <button id="delete">delete</button>
+            <button id="done" class="but">
+                <img class="img" src="imgs/done.png" alt="done">
+                <span class="hover-text">Done</span>
+            </button>
 
-            <label for="imageLoader">Add img</label>
-            <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+            <button id="save" class="but">
+                <img class="img" src="imgs/download.png" alt="download">
+                <span class="hover-text">Download</span>
+            </button>
+
+            <button id="delete" class="but">
+                <img class="img" src="imgs/delete.png" alt="delete">
+                <span class="hover-text">Delete</span>
+            </button>
+
+            <!--  -->
+            <button class="but">
+                <label for="imageLoader">
+                    <img class="img" src="imgs/add-image.png" alt="add-image">
+                </label>
+                <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+                <span class="hover-text">Add image</span>
+            </button>
+            
         </div>
     </div>
     <div id="canvas-container">
         <canvas id="drawingCanvas"></canvas>
     </div>
 
-    <script type="module">
+    <script src="script.js"></script>
+
+    <script>
 
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.85;
@@ -160,17 +179,10 @@
         document.getElementById("brushSize").addEventListener('input', function () {
             canvas.freeDrawingBrush.width = parseInt(this.value, 10);
         });
-        
-        function svgToFile(svgData, fileName) {
-            var file = new File([svgData], fileName, {type: "image/svg+xml"});
-            return file;
-}
 
-        document.getElementById("done").addEventListener('click', async function () {
+        document.getElementById("done").addEventListener('click', function () {
             var svg = canvas.toSVG()
-            //var blob = new Blob([svg], {type: "image/svg+xml"});
-            var fileFromSVG = svgToFile(svg, "neshto.svg");
-            await UploadProcess(fileFromSVG, "testPrompName");
+            //returnva svg string koito posle bi trqbvalo lesno da napravim na svg file za store
             console.log("saved idk");
         })
 
@@ -232,65 +244,6 @@
         document.getElementById("delete").addEventListener('click', function () {
             deleteElement();
         });
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-
-        const firebaseConfig = {
-        apiKey:FIREBASE_API_KEY,
-        authDomain: FIREBASE_AUTH_DOMAIN,
-        projectId: FIREBASE_PROJECT_ID,
-        storageBucket: FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-        appId: FIREBASE_APP_ID,
-        measurementId: FIREBASE_MEASUREMENT_ID
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
-        import {getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-        const clouddb = getFirestore();
-        
-
-        function GetFileExt(file){
-            console.log(file.name);
-
-            var temp = file.name.split('.');
-            var ext = temp.slice((temp.length - 1), (temp.length));
-            return '.' + ext[0];
-            }
-
-            function GetFileName(file){
-                console.log(file.name);
-                var temp = file.name.split('.');
-                var fname = temp.slice(0, -1).join('.');
-                return fname;
-            }
-
-
-        async function UploadProcess(file, promp) {
-            var ImgToUpload = file;
-            var extension = GetFileExt(ImgToUpload);
-            var name = GetFileName(ImgToUpload);
-            console.log(extension);
-         
-            var ImgName = promp + extension; 
-            const metaData = {
-                contentType: ImgToUpload.type
-            }
-
-            const storage = getStorage();
-            const storageRef = sRef(storage, "Images/" + ImgName);
-            try {
-                const snapshot = await uploadBytesResumable(storageRef, ImgToUpload, metaData);
-                var downloadURL = await getDownloadURL(snapshot.ref);
-                return ImgName;
-            } catch (error) {
-                console.error("Error uploading image:", error);
-                alert("Error: Image not uploaded!");
-            }
-        }
 
     </script>
 </body>
