@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <style>
+        img{
+            height: 200px;
+            width: 200px;
+            border: 2px black solid;
+        }
+    </style> -->
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+   <!-- <label>Image Name</label> <input type = "text" id="namebox"> <label id="extlab"></label> <br><br>
+   <img id = "myimg"> <label id="upprogress"></label> <br><br>
+
+   <button id="selbtn">Select Image</button>
+   <button id="upbtn">Upload Image</button>
+   <button id="downbtn">Retrive Image</button> -->
+
+   <div class="container">
+
+    <h1 class="heading">My Gallery</h1>
+
+    <div class="box-container" id="gallery">
+    
+    </div>
+
+</div>
+
+<div id="imagePopup" class="modal">
+    <div id="caption"></div> 
+    <img class="modal-content" id="popupImg">
+    <div id="caption"></div>
+</div>
+
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCfbYG9VoydGiZmIwcycjDF6PbIewBWcwo",
+      authDomain: "kocosi.firebaseapp.com",
+      projectId: "kocosi",
+      storageBucket: "kocosi.appspot.com",
+      messagingSenderId: "904913803495",
+      appId: "1:904913803495:web:bcfe710ac7fc5b9eecea42",
+      measurementId: "G-PJ2MDJBSDV"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
+    import {getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    const clouddb = getFirestore();
+
+    // var files = [];
+    // var reader = new FileReader();
+
+    // var namebox = document.getElementById('namebox');
+    // var extlab = document.getElementById('extlab');
+    // var myimg = document.getElementById('myimg');
+    // var proglab = document.getElementById('upprogress');
+    // var SelBtn = document.getElementById('selbtn');
+    // var UpBtn = document.getElementById('upbtn');
+    // var DownBtn = document.getElementById('downbtn');
+
+    // var input = document.createElement('input');
+    // input.type = 'file';
+
+    // input.onchange = e => {
+    // files = e.target.files;
+    // var extension = GetFileExt(files[0]);
+    // var name = GetFileName(files[0]);
+    // namebox.value = name;
+    // extlab.innerHTML = extension; 
+    // reader.readAsDataURL(files[0]);
+    // };
+
+
+    // reader.onload = function() {
+    // myimg.src = reader.result;
+    // };
+
+
+    // SelBtn.onclick = function() {
+    //     input.click();
+    // };
+
+    // function GetFileExt(file){
+    //     var temp = file.name.split('.');
+    //     var ext = temp.slice((temp.length - 1), (temp.length));
+    //     return '.' + ext[0];
+    // }
+
+    // function GetFileName(file){
+    //     var temp = file.name.split('.');
+    //     var fname = temp.slice(0, -1).join('.');
+    //     return fname;
+    // }
+
+    // async function UploadProcess() {
+    // var ImgToUpload = files[0];
+    // var ImgName = namebox.value + extlab.innerHTML; 
+    // const metaData = {
+    //     contentType: ImgToUpload.type
+    // }
+
+    // const storage = getStorage();
+    // const storageRef = sRef(storage, "Images/" + ImgName);
+    // try {
+    //     const snapshot = await uploadBytesResumable(storageRef, ImgToUpload, metaData);
+    //     var downloadURL = await getDownloadURL(snapshot.ref);
+    //     console.log("Image uploaded successfully. Download URL:", downloadURL);
+    // } catch (error) {
+    //     console.error("Error uploading image:", error);
+    //     alert("Error: Image not uploaded!");
+    // }
+    // }
+
+    async function GetImageFromFirestore1(name){
+    const storage = getStorage();
+    const storageRef = sRef(storage, "Images/" + name);
+    
+    try {
+        const downloadURL = await getDownloadURL(storageRef);
+        return downloadURL;
+        console.log("Image retrieved successfully:", downloadURL);
+    } catch (error) {
+        console.error("Error retrieving image:", error);
+        alert("Error: Image not found!");
+    }
+}
+
+const images = getImages();
+
+async function loadImages() {
+    const gallery = document.getElementById('gallery');
+
+    for (const { src, description } of images) {
+        const box = document.createElement('div');
+        box.className = 'box';
+
+        const descElement = document.createElement('p');
+        descElement.textContent = description;
+        descElement.className = 'image-description';
+
+        const img = document.createElement('img');
+
+        try {
+            const res = await GetImageFromFirestore1(src);
+            img.src = res;
+        } catch (error) {
+            console.error("Error loading image:", error);
+            // Handle error loading image
+            continue; // Skip to the next iteration
+        }
+
+        img.onclick = function() {
+            document.getElementById('imagePopup').style.display = "block";
+            document.getElementById('popupImg').src = this.src;
+            document.getElementById('caption').innerText = description;
+            document.body.classList.add('no-scroll');
+        };
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.body.classList.remove('no-scroll');
+            }
+        }
+
+        box.appendChild(descElement);
+        box.appendChild(img);
+        gallery.appendChild(box);
+    }
+
+    const modal = document.getElementById('imagePopup');
+}
+
+function getImages() {
+    const res = [ //call backend here :)
+        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
+        { src: "Bananas.svg", description: 'Description ' },
+        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
+        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
+        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
+
+    ];
+    
+    return res;
+}
+
+loadImages();
+//UpBtn.onclick = UploadProcess;
+//DownBtn.onclick = GetImageFromFirestore1("cute-fat-bee-sticker.png");
+  </script>
+
+</body>
+</html>
