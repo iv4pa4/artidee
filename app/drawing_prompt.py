@@ -14,15 +14,15 @@ abstractions = ("somewhat specific",
 
 length = ("a sentence", "a couple of words to a sentence", "a couple of words")
 
-cut_phrases = ("Draw a ", "Draw an ", "How about drawing ", "Draw : ", "Please draw a ", "Please draw an ")
+cut_phrases = ("Draw a ", "Draw an ", "How about drawing ", "Draw : ", "Please draw a ", "Please draw an ", "The theme is ", "Drawing theme: ")
 
-beginner = (" Please include animals, creatures, places or objects.", "", "")
+beginner = (" Please include animals, creatures, geographical locations, machines, vehicles, planes, cups, books, food, drinks or other objects.", "", "")
 
 def drawing_prompt(mood, abstraction, additional, user_id):
     if additional:
         additional = "And " + additional
 
-    response = prompt_maker("Please tell me what to draw. Give me a theme that reflects my mood today: " + moods[mood] + ". How specific is the drawing theme: " + abstractions[abstraction] + additional + ". Use B1 vocabulary at most and make it just" + length[abstraction] + "at most! I want your answer to be completely and solely just the theme itself." + beginner[abstraction])
+    response = prompt_maker("Please tell me what to draw. Give me a theme that reflects my mood today: " + moods[mood] + ". How specific is the drawing theme: " + abstractions[abstraction] + additional + ". Use B1 vocabulary at most and make it just" + length[abstraction] + "at most! I want your answer to be completely and solely just the theme itself." + beginner[0])
 
     response = response.strip('/"')
 
