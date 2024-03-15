@@ -17,7 +17,7 @@
 
     <div class="tool-bar">
         <div class="promp-cont">
-            <h3 class="promp">Prompt ala bala</h3>
+            <h3 class="promp" id="prompt"></h3>
         </div>
 
         <div class="tools">
@@ -78,6 +78,8 @@
             width: width,
             height: height
         });
+        
+        var prompt = ""
 
         canvas.width = width;
         canvas.height = height;
@@ -169,9 +171,9 @@
         document.getElementById("done").addEventListener('click', async function () {
             var svg = canvas.toSVG()
             //var blob = new Blob([svg], {type: "image/svg+xml"});
-            var fileFromSVG = svgToFile(svg, "neshto.svg");
-            await UploadProcess(fileFromSVG, "testPrompName");
-            console.log("saved idk");
+            var fileFromSVG = svgToFile(svg, prompt + ".svg");
+            await UploadProcess(fileFromSVG, prompt);
+            saveImage()
         })
 
         document.getElementById("save").addEventListener('click', function () {
@@ -291,7 +293,59 @@
                 alert("Error: Image not uploaded!");
             }
         }
+	function getPrompt(mood, abstraction) {
+            const url = 'https://quant.pythonanywhere.com/prompt';
 
+            const data = {
+                mood: mood,
+                abstraction: abstraction,
+                additional: "",
+                user_id: localStorage.getItem('userID')
+            };
+	
+            fetch(url, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                console.log('Message:', data.prompt);
+                document.getElementById("prompt").textContent = data.prompt
+                prompt = data.prompt;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        
+        function saveImage() {
+            const url = 'https://quant.pythonanywhere.com/upload';
+
+            const data = {
+                filename: prompt + ".svg",
+                user_id: localStorage.getItem('userID')
+            };
+	
+            fetch(url, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        getPrompt(4, 3)
     </script>
 </body>
 
