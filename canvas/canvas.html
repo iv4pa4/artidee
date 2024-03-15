@@ -9,6 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="../gallery2.0/var.js"></script>
+
 </head>
 
 <body>
@@ -65,9 +67,7 @@
         <canvas id="drawingCanvas"></canvas>
     </div>
 
-    <script src="script.js"></script>
-
-    <script>
+    <script type="module">
 
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.85;
@@ -160,10 +160,17 @@
         document.getElementById("brushSize").addEventListener('input', function () {
             canvas.freeDrawingBrush.width = parseInt(this.value, 10);
         });
+        
+        function svgToFile(svgData, fileName) {
+            var file = new File([svgData], fileName, {type: "image/svg+xml"});
+            return file;
+}
 
-        document.getElementById("done").addEventListener('click', function () {
+        document.getElementById("done").addEventListener('click', async function () {
             var svg = canvas.toSVG()
-            //returnva svg string koito posle bi trqbvalo lesno da napravim na svg file za store
+            //var blob = new Blob([svg], {type: "image/svg+xml"});
+            var fileFromSVG = svgToFile(svg, "neshto.svg");
+            await UploadProcess(fileFromSVG, "testPrompName");
             console.log("saved idk");
         })
 
@@ -225,6 +232,65 @@
         document.getElementById("delete").addEventListener('click', function () {
             deleteElement();
         });
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+
+        const firebaseConfig = {
+        apiKey:FIREBASE_API_KEY,
+        authDomain: FIREBASE_AUTH_DOMAIN,
+        projectId: FIREBASE_PROJECT_ID,
+        storageBucket: FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+        appId: FIREBASE_APP_ID,
+        measurementId: FIREBASE_MEASUREMENT_ID
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
+        import {getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        const clouddb = getFirestore();
+        
+
+        function GetFileExt(file){
+            console.log(file.name);
+
+            var temp = file.name.split('.');
+            var ext = temp.slice((temp.length - 1), (temp.length));
+            return '.' + ext[0];
+            }
+
+            function GetFileName(file){
+                console.log(file.name);
+                var temp = file.name.split('.');
+                var fname = temp.slice(0, -1).join('.');
+                return fname;
+            }
+
+
+        async function UploadProcess(file, promp) {
+            var ImgToUpload = file;
+            var extension = GetFileExt(ImgToUpload);
+            var name = GetFileName(ImgToUpload);
+            console.log(extension);
+         
+            var ImgName = promp + extension; 
+            const metaData = {
+                contentType: ImgToUpload.type
+            }
+
+            const storage = getStorage();
+            const storageRef = sRef(storage, "Images/" + ImgName);
+            try {
+                const snapshot = await uploadBytesResumable(storageRef, ImgToUpload, metaData);
+                var downloadURL = await getDownloadURL(snapshot.ref);
+                return ImgName;
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                alert("Error: Image not uploaded!");
+            }
+        }
 
     </script>
 </body>
