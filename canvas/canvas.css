@@ -78,9 +78,18 @@ canvas-container {
 .but:hover .hover-text {
     opacity: 1; 
 }
-
+.but #check-img {
+    margin-left: -10px;
+    /* margin-left: 10000002px;  */
+    /* padding-right: 10px; */
+}
 #colorPicker {
     border: none;
+}
+.color-dropdown {
+    display: none;
+    position: absolute;
+    z-index: 1;
 }
 
 .dropdown {
