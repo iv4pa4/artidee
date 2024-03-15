@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+@font-face {
+	font-family: 'TragicMarker-Regular';
+	src: url("../fonts/TragicMarker-Regular.ttf");
+}
 
 body {
     margin: 0;
@@ -42,6 +46,8 @@ body {
     transition: all 0.2s;
     margin-bottom: 20px; 
     margin-right: 60px;
+    font-family: 'TragicMarker-Regular', sans-serif;   
+
 }
 
 .button:last-child {
@@ -68,7 +74,7 @@ body {
 h1 {
     font-size: 70px;
     font-weight: bold;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+	font-family: 'TragicMarker-Regular', sans-serif;   
     color: black; 
     text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; 
     margin-left: 0px; 
@@ -79,7 +85,7 @@ h1 {
 h2 {
     font-size: 80px;
     font-weight: bold;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+	font-family: 'TragicMarker-Regular', sans-serif;   
     color: #FFD700; 
     text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; 
     margin-left: 0px; 

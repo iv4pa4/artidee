@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
-
+@font-face {
+	font-family: 'TragicMarker-Regular';
+	src: url("../fonts/TragicMarker-Regular.ttf");
+}
 *{
-    font-family: 'Poppins', sans-serif;
+	font-family: 'TragicMarker-Regular', sans-serif;   
     margin:0; padding:0;
     box-sizing: border-box;
     outline: none; border:none;

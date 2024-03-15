@@ -1,6 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
+@font-face {
+	font-family: 'TragicMarker-Regular';
+	src: url("../fonts/TragicMarker-Regular.ttf");
+}
 
 body {
     padding: 0;
@@ -29,8 +32,8 @@ img {
 
 h1 {
     font-weight: bold;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: black; 
+	font-family: 'TragicMarker-Regular', sans-serif;   
+	color: black; 
     text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; 
     margin: 0;
     align-self: flex-center;
@@ -38,7 +41,7 @@ h1 {
 
 h2 {
     font-weight: bold;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+	font-family: 'TragicMarker-Regular', sans-serif;   
     color: black; 
     text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff; 
     margin-left: 0px; 
