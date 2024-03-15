@@ -26,7 +26,7 @@
 .container .box-container{
     margin-top: 50px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-template-columns: repeat(1, 1fr);
     gap:15px;
 }
 
@@ -99,6 +99,30 @@
     font-weight: bold;
     margin-top: 20px;
 }
+
+.friend-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust as needed */
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+.action-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button img {
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
+}
+
 
 @media (max-width:768px){
     .container{
