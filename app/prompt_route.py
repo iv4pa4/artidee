@@ -7,7 +7,7 @@ from app.openai_api_functions import image_generator
 def generate_prompt():
     data = request.json
     mood = data.get('mood')
-    abstraction = 3
+    abstraction = 0
     additional = data.get('additional')
     user_id = data.get('user_id')
 
@@ -16,7 +16,6 @@ def generate_prompt():
 
     for doc in docs:
         abstraction = doc.get('level')
-        print(abstraction)
 
     if mood < 0 or mood > 4 or abstraction < 0 or abstraction > 2 or not user_id:
         return jsonify({'error': 'Missing parameters'}), 400
@@ -24,7 +23,7 @@ def generate_prompt():
     generated_prompt = drawing_prompt(mood, abstraction, additional, user_id)
 
     if abstraction == 0:
-        generated_image = image_generator(generated_prompt)
+        generated_image = image_generator(generated_prompt + ", slightly realistic drawing art style")
         return jsonify({'prompt': generated_prompt, 'image_url': generated_image})
 
     return jsonify({'prompt': generated_prompt})
