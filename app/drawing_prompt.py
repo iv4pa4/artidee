@@ -16,7 +16,7 @@ def drawing_prompt(mood, abstraction, additional, user_id):
     if additional:
         additional = "And " + additional
 
-    response = prompt_maker("Please tell me what to draw. My mood today: " + moods[mood] + ". How specific is the drawing theme: , " + abstractions[abstraction] + additional + ". Make it just a short sentence!")
+    response = prompt_maker("Please tell me what to draw. My mood today: " + moods[mood] + ". How specific is the drawing theme: , " + abstractions[abstraction] + additional + ". Use B1 vocabulary at most and make it just a short sentence!")
             
     blacklist_ref = db.collection("Blacklist").document(user_id)
     blacklist_data = blacklist_ref.get()
