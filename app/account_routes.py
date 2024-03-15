@@ -5,6 +5,7 @@ import os
 from app import app
 from app import base
 from app import auth_url
+from app import db
 
 from flask import request, jsonify
 
@@ -14,7 +15,8 @@ from firebase_admin.auth import UserRecord
 @app.route('/signup', methods=['POST'])
 def sign_up() -> UserRecord:
     try:
-        auth.create_user(email=request.json['email'], password=request.json['password'], display_name=request.json['display_name'])
+        auth.create_user(email=request.json['email'], password=request.json['password'], display_name=request.json['name'])
+        update_time, doc_id = db.collection("Blacklist").add({"level": request.json['level'], "topic": [""], "user_id": auth.get_user_by_email(request.json['email']).uid})
     except ValueError as ve:
         # Handle ValueError (raised when email or password is invalid)
         return jsonify({"msg": str(ve)}), 400
