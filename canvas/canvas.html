@@ -53,7 +53,7 @@
 
 
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                <button  id="drp" class="but2">Brushes</button>
                 <div id="myDropdown" class="dropdown-content">
                     <a id="circle">circle brush</a>
                     <a id="pencil">pencil</a>
@@ -61,6 +61,7 @@
                     <a id="def">Default</a>
                 </div>
             </div>
+
             <div id="brushWidth">
                 <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
             </div>
@@ -160,7 +161,10 @@
             canvas.renderAll();
         });
 
-
+        document.getElementById("drp").addEventListener('click', function(){
+            document.getElementById("myDropdown").classList.toggle("show");
+        })
+        
         document.getElementById("check").addEventListener('click', function () {
             canvas.add(rect);
             document.getElementById("colorPicker2").style.display = "none";
@@ -239,12 +243,10 @@
         });
 
 
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
+        
 
         window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
+            if (!event.target.matches('.but2')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
                 for (var i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];
