@@ -50,17 +50,33 @@
                     <a id="def">Default</a>
                 </div>
             </div>
-
             <div id="brushWidth">
                 <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
             </div>
 
-            <button id="done">done</button>
-            <button id="save">download</button>
-            <button id="delete">delete</button>
+            <button id="done" class="but">
+                <img class="img" src="imgs/done.png" alt="done">
+                <span class="hover-text">Done</span>
+            </button>
 
-            <label for="imageLoader">Add img</label>
-            <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+            <button id="save" class="but">
+                <img class="img" src="imgs/download.png" alt="download">
+                <span class="hover-text">Download</span>
+            </button>
+
+            <button id="delete" class="but">
+                <img class="img" src="imgs/delete.png" alt="delete">
+                <span class="hover-text">Delete</span>
+            </button>
+
+            <!--  -->
+            <button class="but">
+                <label for="imageLoader">
+                    <img class="img" src="imgs/add-image.png" alt="add-image">
+                </label>
+                <input type="file" id="imageLoader" accept="image/*" style="display: none;">
+                <span class="hover-text">Add image</span>
+            </button>
         </div>
     </div>
     <div id="canvas-container">
