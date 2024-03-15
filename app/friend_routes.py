@@ -31,6 +31,31 @@ def add_friend():
 
     return jsonify({"message": "No such friend found"}), 404
 
+@app.route('/unfriend', methods=['DELETE'])
+def unfriend():
+    data = request.json
+    user_id = data.get('user_id')
+    friend_user_id = data.get('friend_user_id')
+
+    if not user_id or not friend_user_id:
+        return jsonify({"message": "Missing user_id or friend_user_id in request"}), 400
+
+    query1 = db.collection("Connections").where('user_id_1', '==', user_id).where('user_id_2', '==', friend_user_id)
+    query2 = db.collection("Connections").where('user_id_1', '==', friend_user_id).where('user_id_2', '==', user_id)
+    
+    docs1 = query1.stream()
+    docs2 = query2.stream()
+
+    for doc in docs1:
+        doc.reference.delete()
+        return jsonify({"message": "Friend removed successfully"}), 200
+
+    for doc in docs2:
+        doc.reference.delete()
+        return jsonify({"message": "Friend removed successfully"}), 200
+
+    return jsonify({"message": "No friendship found"}), 404
+
 @app.route('/friends', methods=['POST'])
 def get_friends():
     data = request.json
