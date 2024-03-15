@@ -135,11 +135,11 @@
     }
 }
 
-const images = getImages();
+let images;
+fetch_images();
 
 async function loadImages() {
     const gallery = document.getElementById('gallery');
-
     for (const { src, description } of images) {
         const box = document.createElement('div');
         box.className = 'box';
@@ -181,20 +181,37 @@ async function loadImages() {
     const modal = document.getElementById('imagePopup');
 }
 
-function getImages() {
-    const res = [ //call backend here :)
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
-        { src: "Bananas.svg", description: 'Description ' },
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
 
-    ];
-    
-    return res;
+function fetch_images() {
+const url = 'https://quant.pythonanywhere.com/get_gallery';
+
+	const data = {
+		user_id: localStorage.getItem('userID'),
+	};
+	
+	fetch(url, {
+		method: 'POST', 
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	})
+	.then(response => response.json())
+	.then(data => {
+  		console.log('Success:', data);
+  		
+  		const res = []
+  		for (let i = 0; i < data.message.length; i++) {
+  			res.push({ src: data.message[i], description: 'Description ' })
+  		}
+  		images = res;
+		loadImages();
+  		
+	})
+	.catch((error) => {
+  		console.error('Error:', error);
+	});
 }
-
-loadImages();
 //UpBtn.onclick = UploadProcess;
 //DownBtn.onclick = GetImageFromFirestore1("cute-fat-bee-sticker.png");
   </script>
