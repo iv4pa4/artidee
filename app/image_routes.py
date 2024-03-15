@@ -1,6 +1,4 @@
 import json
-import requests
-import os
 
 from app import app
 from app import base
