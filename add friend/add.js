@@ -1,12 +1,14 @@
 const usernameInput = document.getElementById('username');
 const addButton = document.getElementById('add');
 
-function addFriend(username) {//TODO
-    const url = 'https://quant.pythonanywhere.com/???';
+function addFriend(username) {
+	const url = 'https://quant.pythonanywhere.com/add_friend';
+	console.log(localStorage.getItem('userID'))
+	console.log(username)
 
 	const data = {
-		userId: localStorage.getItem('userID'),
-		friendName: usernameInput
+		user_id: localStorage.getItem('userID'),
+		name: username
 	};
 	
 	fetch(url, {
@@ -16,7 +18,12 @@ function addFriend(username) {//TODO
 		},
 		body: JSON.stringify(data),
 	})
-	.then(response => response.json())
+	.then(response => {
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+		return response.json();
+	})
 	.then(data => {
   		console.log('Success:', data);
   		console.log('Message:', data.message);
@@ -28,8 +35,7 @@ function addFriend(username) {//TODO
 }
 
 addButton.addEventListener('click', function() {
-    const usernameText = usernameInput.value;
-
-    addFriend(usernameText);
+	const usernameText = usernameInput.value;
+	addFriend(usernameText);
 });
 

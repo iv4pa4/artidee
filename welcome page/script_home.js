@@ -14,13 +14,15 @@ signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
 
+document.addEventListener('DOMContentLoaded', function() {
 doSignUpButton.addEventListener('click', () => {
 	const url = 'https://quant.pythonanywhere.com/signup';
 
 	const data = {
 		name: signupName.value,
 		email: document.getElementById('signupEmail').value,
-		password: document.getElementById('signupPassword').value
+		password: document.getElementById('signupPassword').value,
+		level: parseInt(document.getElementById('level').value)
 	};
 
 	fetch(url, {
@@ -73,3 +75,4 @@ doLoginButton.addEventListener('click', () => {
   		console.error('Error:', error);
 	});
 });
+})
