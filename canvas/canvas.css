@@ -1,0 +1,113 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* overflow: hidden; */
+}
+
+#drawingCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 500px;
+    border: 2px solid rgb(234, 0, 255);
+    box-sizing: border-box;
+}
+
+canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.promp {
+    position: relative;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.tool-bar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.tools {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.but {
+    position: relative;
+    width: 20px; 
+    background-color: #fcfcfc; 
+    border: none; 
+    padding: 10px 20px; 
+    display: inline-block;
+    margin-right: 1%;
+    cursor: pointer; 
+    border-radius: 15px; 
+    display: inline-flex; 
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.img {
+    width: 20px; 
+    height: 20px; 
+}
+.hover-text {
+    position: absolute; 
+    bottom: -20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+}
+.but:active { 
+    box-shadow: none; 
+    background-color: #ddd; 
+}
+.but:hover .hover-text {
+    opacity: 1; 
+}
+
+#colorPicker {
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
