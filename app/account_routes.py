@@ -15,10 +15,10 @@ def sign_up() -> UserRecord:
         update_time, doc_id = db.collection("Blacklist").add({"level": request.json['level'], "topic": [""], "user_id": auth.get_user_by_email(request.json['email']).uid})
     except ValueError as ve:
         # Handle ValueError (raised when email or password is invalid)
-        return jsonify({"msg": str(ve)}), 400
+        return jsonify({"message": str(ve)}), 400
     except Exception as e:
         # Catch any other unexpected errors
-        return jsonify({"msg": str(e)}), 500
+        return jsonify({"message": str(e)}), 500
 
     return jsonify({"message": auth.get_user_by_email(request.json['email']).uid}), 200
 
