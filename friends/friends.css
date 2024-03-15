@@ -68,7 +68,7 @@
 }
 
 .add{
-    background:#03fc3d;
+    
     font-size: 15px;
     font-weight: bold;margin-left: auto;
     display: block;
@@ -121,6 +121,14 @@
 .action-button img {
     width: 20px; /* Adjust size as needed */
     height: 20px;
+    merge: 200px;
+}
+
+.a{
+    border:  #FFC0CB,;
+    border-radius: 5px;
+    background: #fff;
+    margin-bottom: 20px;
 }
 
 
