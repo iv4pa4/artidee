@@ -21,7 +21,7 @@
         </div>
 
         <div class="tools">
-            <button id="edit" class="but" >
+            <button id="edit" class="but">
                 <img class="img" src="imgs/move.png" alt="move">
                 <span class="hover-text">Move</span>
             </button>
@@ -30,19 +30,30 @@
                 <span class="hover-text">Brush</span>
             </button>
 
-            <input id="colorPicker" data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 200, height: 120 }">
+            <input id="colorPicker"
+                data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 200, height: 120 }">
 
-            <button id="clear" width="100px">clear</button>
+            <button id="clear" class="but">
+                <img class="img" src="imgs/clear.png" alt="clear">
+                <span class="hover-text">Clear</span>
+            </button>
 
-            <button id="rec" width="100px">rectangle</button>
+            <label for="colorPicker2" id="rec" class="but">
+                <img class="img" src="imgs/rec.png" alt="rec">
+            </label>
             <input id="colorPicker2"
                 data-jscolor="{ value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 120, height: 120 }"
-                style="display: none;">
-            <button id="check" style="display: none;">check</button>
+                style="display: none;" class="color-dropdown">
 
-            
+
+            <button id="check" style="display: none;" class="but">
+                <img class="img" id="check-img" src="imgs/check.png" alt="check">
+                <span class="hover-text">Add</span>
+            </button>
+
+
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                <button  id="drp" class="but2">Brushes</button>
                 <div id="myDropdown" class="dropdown-content">
                     <a id="circle">circle brush</a>
                     <a id="pencil">pencil</a>
@@ -50,6 +61,7 @@
                     <a id="def">Default</a>
                 </div>
             </div>
+
             <div id="brushWidth">
                 <input type="range" id="brushSize" name="brushSize" min="1" max="20" value="5">
             </div>
@@ -69,7 +81,6 @@
                 <span class="hover-text">Delete</span>
             </button>
 
-            <!--  -->
             <button class="but">
                 <label for="imageLoader">
                     <img class="img" src="imgs/add-image.png" alt="add-image">
@@ -83,15 +94,15 @@
         <canvas id="drawingCanvas"></canvas>
         <img src="" id="promptImage">
     </div>
-    
-    
+
+
 
     <script type="module">
-       	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var height = ((window.innerHeight > 0) ? window.innerHeight : screen.height) * 0.85;
-	if (true) {
-       		width = width/2
-	}
+        if (true) {
+            width = width / 2
+        }
 
         var canvas = new fabric.Canvas('drawingCanvas', {
             isDrawingMode: true,
@@ -99,7 +110,7 @@
             width: width,
             height: height
         });
-        
+
         var prompt = ""
 
         canvas.width = width;
@@ -132,7 +143,7 @@
         })
 
         document.getElementById("rec").addEventListener('click', function () {
-            document.getElementById("colorPicker2").style.display = "block";
+            document.getElementById("colorPicker2").style.display = "block";    
             document.getElementById("check").style.display = "block";
 
             var col = document.getElementById("colorPicker2").value;
@@ -148,8 +159,12 @@
                 });
             });
             canvas.renderAll();
-        })
+        });
 
+        document.getElementById("drp").addEventListener('click', function(){
+            document.getElementById("myDropdown").classList.toggle("show");
+        })
+        
         document.getElementById("check").addEventListener('click', function () {
             canvas.add(rect);
             document.getElementById("colorPicker2").style.display = "none";
@@ -183,11 +198,11 @@
         document.getElementById("brushSize").addEventListener('input', function () {
             canvas.freeDrawingBrush.width = parseInt(this.value, 10);
         });
-        
+
         function svgToFile(svgData, fileName) {
-            var file = new File([svgData], fileName, {type: "image/svg+xml"});
+            var file = new File([svgData], fileName, { type: "image/svg+xml" });
             return file;
-}
+        }
 
         document.getElementById("done").addEventListener('click', async function () {
             var svg = canvas.toSVG()
@@ -228,12 +243,10 @@
         });
 
 
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
+        
 
         window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
+            if (!event.target.matches('.but2')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
                 for (var i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];
@@ -260,36 +273,36 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
         const firebaseConfig = {
-        apiKey:FIREBASE_API_KEY,
-        authDomain: FIREBASE_AUTH_DOMAIN,
-        projectId: FIREBASE_PROJECT_ID,
-        storageBucket: FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-        appId: FIREBASE_APP_ID,
-        measurementId: FIREBASE_MEASUREMENT_ID
+            apiKey: FIREBASE_API_KEY,
+            authDomain: FIREBASE_AUTH_DOMAIN,
+            projectId: FIREBASE_PROJECT_ID,
+            storageBucket: FIREBASE_STORAGE_BUCKET,
+            messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+            appId: FIREBASE_APP_ID,
+            measurementId: FIREBASE_MEASUREMENT_ID
         };
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
-        import {getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
+        import { getFirestore, doc, getDoc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         const clouddb = getFirestore();
-        
 
-        function GetFileExt(file){
+
+        function GetFileExt(file) {
             console.log(file.name);
 
             var temp = file.name.split('.');
             var ext = temp.slice((temp.length - 1), (temp.length));
             return '.' + ext[0];
-            }
+        }
 
-            function GetFileName(file){
-                console.log(file.name);
-                var temp = file.name.split('.');
-                var fname = temp.slice(0, -1).join('.');
-                return fname;
-            }
+        function GetFileName(file) {
+            console.log(file.name);
+            var temp = file.name.split('.');
+            var fname = temp.slice(0, -1).join('.');
+            return fname;
+        }
 
 
         async function UploadProcess(file, promp) {
@@ -297,8 +310,8 @@
             var extension = GetFileExt(ImgToUpload);
             var name = GetFileName(ImgToUpload);
             console.log(extension);
-         
-            var ImgName = promp + extension; 
+
+            var ImgName = promp + extension;
             const metaData = {
                 contentType: ImgToUpload.type
             }
@@ -314,7 +327,7 @@
                 alert("Error: Image not uploaded!");
             }
         }
-	function getPrompt(mood, abstraction) {
+        function getPrompt(mood, abstraction) {
             const url = 'https://quant.pythonanywhere.com/prompt';
 
             const data = {
@@ -323,30 +336,30 @@
                 additional: "",
                 user_id: localStorage.getItem('userID')
             };
-	
+
             fetch(url, {
-                method: 'POST', 
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                console.log('Message:', data.prompt);
-                console.log('Message:', data.image_url);
-                document.getElementById("prompt").textContent = data.prompt;
-                if (data.image_url != null) {
-                	document.getElementById("promptImage").src = data.image_url;
-                }
-                prompt = data.prompt;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    console.log('Message:', data.prompt);
+                    console.log('Message:', data.image_url);
+                    document.getElementById("prompt").textContent = data.prompt;
+                    if (data.image_url != null) {
+                        document.getElementById("promptImage").src = data.image_url;
+                    }
+                    prompt = data.prompt;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
-        
+
         function saveImage() {
             const url = 'https://quant.pythonanywhere.com/upload';
 
@@ -354,21 +367,21 @@
                 filename: prompt + ".svg",
                 user_id: localStorage.getItem('userID')
             };
-	
+
             fetch(url, {
-                method: 'POST', 
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
         getPrompt(4, 3)
     </script>

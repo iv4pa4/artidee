@@ -78,9 +78,18 @@ canvas-container {
 .but:hover .hover-text {
     opacity: 1; 
 }
-
+.but #check-img {
+    margin-left: -10px;
+}
 #colorPicker {
     border: none;
+}
+.color-dropdown {
+    display: none;
+    position: absolute;
+    margin-left:30%;
+    margin-top: 5%;
+    z-index: 1;
 }
 
 .dropdown {
@@ -110,4 +119,27 @@ canvas-container {
 
 .show {
     display: block;
+}
+
+.but2{
+    position: relative;
+    width: 60px; 
+    background-color: #fcfcfc; 
+    border: none; 
+    padding: 10px 20px; 
+    display: inline-block;
+    margin-right: 1%;
+    cursor: pointer; 
+    border-radius: 15px; 
+    display: inline-flex; 
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.but2:active { 
+    box-shadow: none; 
+    background-color: #ddd; 
+}
+.but2:hover .hover-text {
+    opacity: 1; 
 }
