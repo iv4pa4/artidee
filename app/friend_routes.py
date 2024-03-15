@@ -22,9 +22,14 @@ def add():
             update_time, doc_id = db.collection("Connections").add({"user_id_1": request.json['user_id'], "user_id_2": uid})
             return jsonify({"message": "Friend added successfully"}), 200
 
-@app.route('/friends/<user_id>', methods=['GET'])
-def get_friends(user_id):
-
+@app.route('/friends', methods=['GET'])
+def get_friends():
+    data = request.json
+    user_id = data.get('user_id')
+    
+    if not user_id:
+        return jsonify({'error': 'Missing parameters'}), 400
+    
     connections_ref = db.collection("Connections")
     friends = []
 

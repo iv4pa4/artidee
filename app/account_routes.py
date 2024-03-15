@@ -1,11 +1,7 @@
-import json
 import requests
 import os
 
-from app import app
-from app import base
-from app import auth_url
-from app import db
+from app import app, base, auth_url, db
 
 from flask import request, jsonify
 

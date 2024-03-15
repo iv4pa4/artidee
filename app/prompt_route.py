@@ -1,6 +1,5 @@
 from app import app
 from flask import request, jsonify
-from flask import request, jsonify
 from app.drawing_prompt import drawing_prompt
 from app.openai_api_functions import image_generator
 
