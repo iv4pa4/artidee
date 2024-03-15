@@ -1,13 +1,10 @@
-const friends = getFriends();
-
 const addButton = document.getElementById('add');
 
 add.addEventListener('click', () => {
     window.location.href = '../add%20friend/add.html';
 })
 
-function loadFriends() {
-    const friendsList = getFriends();
+function loadFriends(friendsList) {
     const friendsContainer = document.getElementById('friends');
 
     friendsList.forEach((friend) => {
@@ -52,17 +49,47 @@ function loadFriends() {
 
 
 
-function getFriends() {
-    const res = [ //call backend here :)
-        { id: 'y0VZI93ePBbtsVIW5SF9lIA3rJA2', name: 'Friend 1' },
-        { id: 'y0VZI93ePBbtsVIW5SF9lIA3rJA2', name: 'Friend 2' },
-        { id: 'y0VZI93ePBbtsVIW5SF9lIA3rJA2', name: 'Friend 3' },
-        { id: 'y0VZI93ePBbtsVIW5SF9lIA3rJA2', name: 'Friend 4' },
-        { id: 'y0VZI93ePBbtsVIW5SF9lIA3rJA2', name: 'Friend 5' },
-        { id: 'y0VZI93ePBbtsVIW5SF9lIA3rJA2', name: 'Friend 6' },
-    ];
+function getFriends(ids, names) {
+
+    const res = ids.map((id, index) => {
+        return { id: id, name: names[index] };
+    });
     
     return res;
 }
 
-loadFriends();
+function loadMyFriends() {
+    const userId = localStorage.getItem('userId');
+    const url = new URL('https://quant.pythonanywhere.com/friends');
+    url.searchParams.append('user_id', localStorage.getItem('userID')); // Append user_id as a query parameter
+
+	const data = {
+		user_id: localStorage.getItem('userID')
+	};
+	
+    fetch(url, {
+		method: 'POST', 
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+		return response.json();
+	})
+	.then(data => {
+  		console.log('Success:', data);
+  		var friends = getFriends(data.friends, data.names)
+                loadFriends(friends);
+	})
+	.catch((error) => {
+  		console.error('Error:', error);
+	});
+}
+
+loadMyFriends() 
+
+
