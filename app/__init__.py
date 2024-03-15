@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from flask import Flask
 from flask_cors import CORS
 
-cred = credentials.Certificate(os.path.join(os.getcwd(), "app\\kocosi-firebase-key.json"))
+cred = credentials.Certificate(os.path.join(os.getcwd(), "keys\\kocosi-firebase-key.json"))
 
 base = firebase_admin.initialize_app(cred)
 db = firestore.client()

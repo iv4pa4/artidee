@@ -17,4 +17,4 @@ def get_gallery():
     jsons = []
     for doc in docs:
         jsons.append(doc.get('filename'))
-    return json.dumps(jsons), 200
+    return jsonify({"message": jsons}), 200
