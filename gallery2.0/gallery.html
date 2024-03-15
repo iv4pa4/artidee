@@ -12,6 +12,7 @@
         }
     </style> -->
     <link rel="stylesheet" href="gallery.css">
+    <script src="./var.js"></script>
 </head>
 <body>
    <!-- <label>Image Name</label> <input type = "text" id="namebox"> <label id="extlab"></label> <br><br>
@@ -42,13 +43,13 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyCfbYG9VoydGiZmIwcycjDF6PbIewBWcwo",
-      authDomain: "kocosi.firebaseapp.com",
-      projectId: "kocosi",
-      storageBucket: "kocosi.appspot.com",
-      messagingSenderId: "904913803495",
-      appId: "1:904913803495:web:bcfe710ac7fc5b9eecea42",
-      measurementId: "G-PJ2MDJBSDV"
+      apiKey:FIREBASE_API_KEY,
+      authDomain: FIREBASE_AUTH_DOMAIN,
+      projectId: FIREBASE_PROJECT_ID,
+      storageBucket: FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+      appId: FIREBASE_APP_ID,
+      measurementId: FIREBASE_MEASUREMENT_ID
     };
   
     const app = initializeApp(firebaseConfig);
@@ -135,11 +136,11 @@
     }
 }
 
-const images = getImages();
+let images;
+fetch_images();
 
 async function loadImages() {
     const gallery = document.getElementById('gallery');
-
     for (const { src, description } of images) {
         const box = document.createElement('div');
         box.className = 'box';
@@ -181,20 +182,37 @@ async function loadImages() {
     const modal = document.getElementById('imagePopup');
 }
 
-function getImages() {
-    const res = [ //call backend here :)
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
-        { src: "Bananas.svg", description: 'Description ' },
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
-        { src: "cute-fat-bee-sticker.png", description: 'Description ' },
 
-    ];
-    
-    return res;
+function fetch_images() {
+const url = 'https://quant.pythonanywhere.com/get_gallery';
+
+	const data = {
+		user_id: localStorage.getItem('userID'),
+	};
+	
+	fetch(url, {
+		method: 'POST', 
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	})
+	.then(response => response.json())
+	.then(data => {
+  		console.log('Success:', data);
+  		
+  		const res = []
+  		for (let i = 0; i < data.message.length; i++) {
+  			res.push({ src: data.message[i], description: data.message[i].replace(/\.png$|\.svg$/, "") })
+  		}
+  		images = res;
+		loadImages();
+  		
+	})
+	.catch((error) => {
+  		console.error('Error:', error);
+	});
 }
-
-loadImages();
 //UpBtn.onclick = UploadProcess;
 //DownBtn.onclick = GetImageFromFirestore1("cute-fat-bee-sticker.png");
   </script>
