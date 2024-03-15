@@ -42,7 +42,7 @@ def unfriend():
 
     query1 = db.collection("Connections").where('user_id_1', '==', user_id).where('user_id_2', '==', friend_user_id)
     query2 = db.collection("Connections").where('user_id_1', '==', friend_user_id).where('user_id_2', '==', user_id)
-    
+
     docs1 = query1.stream()
     docs2 = query2.stream()
 
