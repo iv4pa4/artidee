@@ -40,6 +40,15 @@
 </div>
 
    <script type="module">
+   if (localStorage.getItem('friendName') && localStorage.getItem('friendName') !== "null") {
+        document.querySelector('.heading').textContent = localStorage.getItem('friendName') + "'s Gallery";
+        localStorage.removeItem('friendName');
+        fetch_images(false)
+    } else {
+        document.querySelector('.heading').textContent = "My Gallery"
+        fetch_images(true)
+    }
+   
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
@@ -141,7 +150,6 @@
 }
 
 let images;
-fetch_images();
 
 async function loadImages() {
     const gallery = document.getElementById('gallery');
@@ -160,8 +168,7 @@ async function loadImages() {
             img.src = res;
         } catch (error) {
             console.error("Error loading image:", error);
-            // Handle error loading image
-            continue; // Skip to the next iteration
+            continue;
         }
 
         img.onclick = function() {
@@ -187,12 +194,13 @@ async function loadImages() {
 }
 
 
-function fetch_images() {
-const url = 'https://quant.pythonanywhere.com/get_gallery';
+function fetch_images(isMine) {
+	const url = 'https://quant.pythonanywhere.com/get_gallery';
 
 	const data = {
-		user_id: localStorage.getItem('userID'),
+		user_id: isMine ? localStorage.getItem('userID') : localStorage.getItem('friendId'),
 	};
+
 	
 	fetch(url, {
 		method: 'POST', 

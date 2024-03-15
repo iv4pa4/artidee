@@ -2,6 +2,7 @@ const images = getImages();
 
 if (localStorage.getItem('friendName') && localStorage.getItem('friendName') !== "null") {
     document.querySelector('.heading').textContent = localStorage.getItem('friendName') + "'s Gallery";
+    localStorage.removeItem('friendId');
     localStorage.removeItem('friendName');
 } else {
     document.querySelector('.heading').textContent = "My Gallery"
