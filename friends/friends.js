@@ -36,7 +36,9 @@ function loadFriends(friendsList) {
 
         const unfriendButton = document.createElement('button');
         unfriendButton.className = 'action-button unfriend';
-        unfriendButton.onclick = () => console.log('Unfriend Clicked');
+        unfriendButton.onclick = () => {
+		deleteFriend(id);
+        };
         const unfriendIcon = document.createElement('img');
         unfriendIcon.src = 'unfriend_icon.svg';
         unfriendButton.appendChild(unfriendIcon);
@@ -92,6 +94,32 @@ function loadMyFriends() {
   		console.error('Error:', error);
 	});
 }
+
+function deleteFriend(friendUserId) {
+	const url = 'https://quant.pythonanywhere.com/unfriend';
+	const data = {
+		user_id: localStorage.getItem('userID'),
+		friend_user_id: friendUserId
+	};
+
+	fetch(url, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log('Success:', data);
+		location.reload();
+	})
+	.catch((error) => {
+		console.error('Error:', error);
+	});
+}
+
+
 
 loadMyFriends() 
 
