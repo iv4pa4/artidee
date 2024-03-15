@@ -20,7 +20,8 @@ doSignUpButton.addEventListener('click', () => {
 	const data = {
 		name: signupName.value,
 		email: document.getElementById('signupEmail').value,
-		password: document.getElementById('signupPassword').value
+		password: document.getElementById('signupPassword').value,
+		level: parseInt(document.getElementById('level').value)
 	};
 
 	fetch(url, {
