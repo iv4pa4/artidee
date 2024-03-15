@@ -26,7 +26,12 @@ def drawing_prompt(mood, abstraction, additional, user_id):
         if response in blacklist:
             return drawing_prompt(mood, abstraction, additional, user_id)
     
-    blacklist_ref.update({"topics": firestore.ArrayUnion([response])})
+    topics_list = blacklist_data.to_dict().get("topics", [])
+    if len(topics_list) == 50:
+        topics_list.pop(0)
+    topics_list.append(response)
+    
+    blacklist_ref.update({"topics": topics_list})
 
     if "user_id" not in blacklist_data.to_dict():
         blacklist_ref.update({"user_id": user_id})
