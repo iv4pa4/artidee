@@ -14,6 +14,7 @@ signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
 
+document.addEventListener('DOMContentLoaded', function() {
 doSignUpButton.addEventListener('click', () => {
 	const url = 'https://quant.pythonanywhere.com/signup';
 
@@ -74,3 +75,4 @@ doLoginButton.addEventListener('click', () => {
   		console.error('Error:', error);
 	});
 });
+})
