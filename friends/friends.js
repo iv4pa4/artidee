@@ -25,7 +25,11 @@ function loadFriends(friendsList) {
 
         const multiplePicturesButton = document.createElement('button');
         multiplePicturesButton.className = 'action-button multiple-pictures';
-        multiplePicturesButton.onclick = () => console.log('Multiple Pictures Clicked');
+        multiplePicturesButton.onclick = () => {
+            localStorage.setItem('friendId', id)
+            localStorage.setItem('friendName', name)
+	    window.location.href = '../gallery2.0/gallery.html';
+        }
         const multiplePicturesIcon = document.createElement('img');
         multiplePicturesIcon.src = 'multiple_pictures_icon.svg';
         multiplePicturesButton.appendChild(multiplePicturesIcon);
@@ -50,7 +54,6 @@ function loadFriends(friendsList) {
 
 
 function getFriends(ids, names) {
-
     const res = ids.map((id, index) => {
         return { id: id, name: names[index] };
     });
@@ -61,7 +64,7 @@ function getFriends(ids, names) {
 function loadMyFriends() {
     const userId = localStorage.getItem('userId');
     const url = new URL('https://quant.pythonanywhere.com/friends');
-    url.searchParams.append('user_id', localStorage.getItem('userID')); // Append user_id as a query parameter
+    url.searchParams.append('user_id', localStorage.getItem('userID'));
 
 	const data = {
 		user_id: localStorage.getItem('userID')

@@ -40,8 +40,9 @@
 </div>
 
    <script type="module">
-   if (localStorage.getItem('friendName') && localStorage.getItem('friendName') !== "null") {
+   if (localStorage.getItem('friendId') && localStorage.getItem('friendId') !== "null") {
         document.querySelector('.heading').textContent = localStorage.getItem('friendName') + "'s Gallery";
+        localStorage.removeItem('friendId');
         localStorage.removeItem('friendName');
         fetch_images(false)
     } else {
