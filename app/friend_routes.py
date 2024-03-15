@@ -2,8 +2,8 @@ from app import app, base, db
 from flask import request, jsonify
 from firebase_admin import auth
 
-@app.route('/add', methods=['POST'])
-def add():
+@app.route('/add_friend', methods=['POST'])
+def add_friend():
     query = db.collection("Blacklist")
     docs = query.stream()
     uids = []
@@ -26,10 +26,10 @@ def add():
 def get_friends():
     data = request.json
     user_id = data.get('user_id')
-    
+
     if not user_id:
         return jsonify({'error': 'Missing parameters'}), 400
-    
+
     connections_ref = db.collection("Connections")
     friends = []
 
