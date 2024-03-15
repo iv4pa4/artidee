@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-with open('key.txt', 'r') as file:
+with open('keys/key.txt', 'r') as file:
     my_key = file.read()
 
 client = OpenAI(

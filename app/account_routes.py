@@ -24,7 +24,7 @@ def sign_up() -> UserRecord:
 
 @app.route('/login', methods=['POST'])
 def log_in() -> UserRecord:
-    key = open(os.path.join(os.getcwd(), "app\\web_api_key.txt"), 'r')
+    key = open(os.path.join(os.getcwd(), "keys\\web_api_key.txt"), 'r')
     response = requests.post(auth_url,
                     params={"key": key.read()},
                     data=request.json)
