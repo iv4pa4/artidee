@@ -13,6 +13,7 @@
     </style> -->
     <link rel="stylesheet" href="gallery.css">
     <script src="./var.js"></script>
+
 </head>
 <body>
    <!-- <label>Image Name</label> <input type = "text" id="namebox"> <label id="extlab"></label> <br><br>
@@ -51,12 +52,15 @@
       appId: FIREBASE_APP_ID,
       measurementId: FIREBASE_MEASUREMENT_ID
     };
+    // console.log('Port:', config.port);
+    // console.log('Username:', config.username);
+    // console.log('Password:', config.password);
   
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"
     import {getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-    const clouddb = getFirestore();
+    //const clouddb = getFirestore();
 
     // var files = [];
     // var reader = new FileReader();
@@ -213,8 +217,10 @@ const url = 'https://quant.pythonanywhere.com/get_gallery';
   		console.error('Error:', error);
 	});
 }
+
 //UpBtn.onclick = UploadProcess;
 //DownBtn.onclick = GetImageFromFirestore1("cute-fat-bee-sticker.png");
+    
   </script>
 
 </body>
