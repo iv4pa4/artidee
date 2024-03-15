@@ -1,6 +1,7 @@
 from app.openai_api_functions import prompt_maker
 from app import db
 from firebase_admin import firestore
+from thefuzz import fuzz
 
 moods = ("very dark",
          "mildly dark",
@@ -39,12 +40,13 @@ def drawing_prompt(mood, abstraction, additional, user_id):
     blacklist_ref = db.collection("Blacklist").document(user_id)
     blacklist_data = blacklist_ref.get()
 
-    if blacklist_data.exists:
-        blacklist = blacklist_data.to_dict().get("topics", [])
-        if response in blacklist:
-            return drawing_prompt(mood, abstraction, additional, user_id)
-
     topics_list = blacklist_data.to_dict().get("topics", [])
+    if blacklist_data.exists:
+        for topic in topics_list:
+                if fuzz.ratio(response, topic) > 75 or fuzz.partial_ratio(response, topic) > 75:
+                    # print("Too similar - redoing prompt")
+                    return drawing_prompt(mood, abstraction, additional, user_id)
+
     if len(topics_list) == 50:
         topics_list.pop(0)
     topics_list.append(response)
@@ -53,8 +55,5 @@ def drawing_prompt(mood, abstraction, additional, user_id):
 
     if "user_id" not in blacklist_data.to_dict():
         blacklist_ref.update({"user_id": user_id})
-
-    if response in blacklist:
-        return drawing_prompt(mood, abstraction, additional, user_id)
 
     return response
