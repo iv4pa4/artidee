@@ -202,7 +202,7 @@ const url = 'https://quant.pythonanywhere.com/get_gallery';
   		
   		const res = []
   		for (let i = 0; i < data.message.length; i++) {
-  			res.push({ src: data.message[i], description: 'Description ' })
+  			res.push({ src: data.message[i], description: data.message[i].replace(/\.png$|\.svg$/, "") })
   		}
   		images = res;
 		loadImages();
