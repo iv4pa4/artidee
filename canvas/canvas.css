@@ -1,3 +1,7 @@
+@font-face {
+	font-family: 'Wayhem Free Version';
+	src: url("../fonts/Wayhem Free Version.otf");
+}
 body,
 html {
     margin: 0;
@@ -13,7 +17,7 @@ html {
     right: 0;
     bottom: 0;
     /* width: 500px; */
-    border: 2px solid rgb(234, 0, 255);
+    border: 2px solid rgb(0, 0, 0);
     box-sizing: border-box;
 }
 
@@ -134,6 +138,8 @@ canvas-container {
     justify-content: center; 
     align-items: center; 
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Wayhem Free Version', sans-serif;   
+
 }
 .but2:active { 
     box-shadow: none; 

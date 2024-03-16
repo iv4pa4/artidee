@@ -23,6 +23,12 @@
     font-size: 50px;
 }
 
+.bud{
+    width: 650px;
+    position: absolute;
+    margin-left: 400px;
+}
+
 .button-container {
     display: flex;
     justify-content: center;
