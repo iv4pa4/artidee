@@ -13,34 +13,6 @@
     transition: .2s linear;
 }
 
-.backbutton {
-	border-radius: 20px;
-	border: 1px solid #bd74ed;
-	background-color: #bd74ed;
-	color: #FFFFFF;
-	font-size: 14px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-	font-family: 'Wayhem Free Version', sans-serif;   
-  cursor:pointer;
-}
-
-
-.backbutton:active {
-	transform: scale(0.95);
-}
-
-.backbutton:focus {
-	outline: none;
-}
-
-.backbutton.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
-}
 .friend1{
     width: 250px;
     position: absolute;
@@ -166,7 +138,7 @@
 .action-button img {
     width: 20px; /* Adjust size as needed */
     height: 20px;
-    margin: 200px;
+    merge: 200px;
 }
 
 .a{
@@ -174,6 +146,35 @@
     border-radius: 5px;
     background: #fff;
     margin-bottom: 20px;
+}
+
+.backbutton {
+	border-radius: 20px;
+	border: 1px solid #bd74ed;
+	background-color: #bd74ed;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	font-family: 'Wayhem Free Version', sans-serif;   
+  cursor:pointer;
+}
+
+
+.backbutton:active {
+	transform: scale(0.95);
+}
+
+.backbutton:focus {
+	outline: none;
+}
+
+.backbutton.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
 }
 
 
