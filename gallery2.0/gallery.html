@@ -42,8 +42,6 @@
    <script type="module">
    if (localStorage.getItem('friendId') && localStorage.getItem('friendId') !== "null") {
         document.querySelector('.heading').textContent = localStorage.getItem('friendName') + "'s Gallery";
-        localStorage.removeItem('friendId');
-        localStorage.removeItem('friendName');
         fetch_images(false)
     } else {
         document.querySelector('.heading').textContent = "My Gallery"
@@ -201,7 +199,9 @@ function fetch_images(isMine) {
 	const data = {
 		user_id: isMine ? localStorage.getItem('userID') : localStorage.getItem('friendId'),
 	};
-
+	
+        localStorage.removeItem('friendId');
+        localStorage.removeItem('friendName');
 	
 	fetch(url, {
 		method: 'POST', 
