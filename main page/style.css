@@ -16,6 +16,44 @@ body {
     align-items: center;
 }
 
+
+
+a {
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+}
+
+.backbutton {
+	border-radius: 20px;
+	border: 1px solid #bd74ed;
+	background-color: #bd74ed;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	font-family: 'Wayhem Free Version', sans-serif;   
+  cursor:pointer;
+}
+
+
+.backbutton:active {
+	transform: scale(0.95);
+}
+
+.backbutton:focus {
+	outline: none;
+}
+
+.backbutton.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
+}
+
 .container {
     display: flex;
     align-items: center;
