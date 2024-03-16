@@ -94,6 +94,8 @@
         <canvas id="drawingCanvas"></canvas>
         <img src="" id="promptImage" class="example">
     </div>
+    
+    <div class="loader"></div>
 
     <script type="module">
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -327,6 +329,12 @@
             }
         }
         function getPrompt(mood, abstraction) {
+            const loader = document.querySelector(".loader");
+            
+            
+            
+            
+            
             const url = 'https://quant.pythonanywhere.com/prompt';
 
             const data = {
@@ -353,9 +361,11 @@
                         document.getElementById("promptImage").src = data.image_url;
                     }
                     prompt = data.prompt;
+                    loader.classList.add("loader-hidden");
                 })
                 .catch((error) => {
                     console.error('Error:', error);
+                    loader.classList.add("loader-hidden");
                 });
         }
 
