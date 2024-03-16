@@ -243,9 +243,6 @@
             reader.readAsDataURL(file);
         });
 
-
-
-
         window.onclick = function (event) {
             if (!event.target.matches('.but2')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -387,6 +384,7 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
+	            window.location.href = '../main%20page/main.html';
                 })
                 .catch((error) => {
                     console.error('Error:', error);
