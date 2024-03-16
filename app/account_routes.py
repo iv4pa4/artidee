@@ -12,7 +12,7 @@ from firebase_admin.auth import UserRecord
 def sign_up() -> UserRecord:
     try:
         auth.create_user(email=request.json['email'], password=request.json['password'], display_name=request.json['name'])
-        update_time, doc_id = db.collection("Blacklist").add({"level": request.json['level'], "topic": [""], "user_id": auth.get_user_by_email(request.json['email']).uid})
+        update_time, doc_id = db.collection("Blacklist").add({"level": request.json['level'], "topics": [""], "user_id": auth.get_user_by_email(request.json['email']).uid})
     except ValueError as ve:
         # Handle ValueError (raised when email or password is invalid)
         return jsonify({"message": str(ve)}), 400
