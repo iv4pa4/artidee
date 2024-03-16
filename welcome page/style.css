@@ -225,6 +225,16 @@ h3 {
   	transform: translateX(50%);
 }
 
+.logo{
+	width: 200px;
+    position: absolute;
+    margin-bottom: 500px;
+}
+.logoLog{
+	width: 200px;
+    position: absolute;
+    margin-bottom: 500px;
+}
 .overlay-panel {
 	position: absolute;
 	display: flex;
